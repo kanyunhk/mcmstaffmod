@@ -7,6 +7,7 @@ import net.playmcm.qwertysam.io.SaveHandling;
 
 public class MessageSender 
 {
+	/** The delay in milliseconds for sending delayed messages. **/
 	public static final int delay = 200;
 	
 	/**
@@ -48,23 +49,7 @@ public class MessageSender
 					break;
 			}
 			
-			Thread t = new Thread(new Runnable() 
-			{
-			    public void run() 
-			    {
-			    	try 
-			    	{
-						Thread.sleep(delay);
-					} 
-			    	catch (InterruptedException e) 
-			    	{
-						e.printStackTrace();
-					}
-			    	sendMessage("http://goo.gl/8o8rbv"); // The link to the how to become moderator page
-			    }
-			});
-			t.start();
-			
+			sendDelayedMessage("http://goo.gl/8o8rbv", 1); // The link to the how to become moderator page
 		}
 		else if(messageID == "rules_link")
 		{
@@ -88,22 +73,7 @@ public class MessageSender
 					break;
 			}
 			
-			Thread t = new Thread(new Runnable() 
-			{
-			    public void run() 
-			    {
-			    	try 
-			    	{
-						Thread.sleep(delay);
-					} 
-			    	catch (InterruptedException e) 
-			    	{
-						e.printStackTrace();
-					}
-			    	sendMessage("http://goo.gl/dniAkM"); // The link to the reports help page
-			    }
-			});
-			t.start();
+			sendDelayedMessage("http://goo.gl/dniAkM", 1); // The link to the reports help page
 		}
 		else if(messageID == "vote_link")
 		{
@@ -127,22 +97,7 @@ public class MessageSender
 					break;
 			}
 			
-			Thread t = new Thread(new Runnable() 
-			{
-			    public void run() 
-			    {
-			    	try 
-			    	{
-						Thread.sleep(delay);
-					} 
-			    	catch (InterruptedException e) 
-			    	{
-						e.printStackTrace();
-					}
-			    	sendMessage("http://minecraft-murder.net/vote"); // The link to the vote page
-			    }
-			});
-			t.start();
+			sendDelayedMessage("http://minecraft-murder.net/vote", 1); // The link to the vote page
 		}
 		else if(messageID == "donate_link")
 		{
@@ -166,22 +121,7 @@ public class MessageSender
 					break;
 			}
 			
-			Thread t = new Thread(new Runnable() 
-			{
-			    public void run() 
-			    {
-			    	try 
-			    	{
-						Thread.sleep(delay);
-					} 
-			    	catch (InterruptedException e) 
-			    	{
-						e.printStackTrace();
-					}
-			    	sendMessage("http://minecraft-murder.net/shop"); // The link to the donation page
-			    }
-			});
-			t.start();
+			sendDelayedMessage("http://minecraft-murder.net/shop", 1); // The link to the donation page
 		}
 		else if(messageID == "report_link")
 		{
@@ -205,22 +145,7 @@ public class MessageSender
 					break;
 			}
 			
-			Thread t = new Thread(new Runnable() 
-			{
-			    public void run() 
-			    {
-			    	try 
-			    	{
-						Thread.sleep(delay);
-					} 
-			    	catch (InterruptedException e) 
-			    	{
-						e.printStackTrace();
-					}
-			    	sendMessage("http://goo.gl/cGaXAm"); // The link to the reports page
-			    }
-			});
-			t.start();
+			sendDelayedMessage("http://goo.gl/cGaXAm", 1); // The link to the reports page
 		}
 		else if(messageID == "appeal_link")
 		{
@@ -241,102 +166,27 @@ public class MessageSender
 					break;
 			}
 			
-			Thread t = new Thread(new Runnable() 
-			{
-			    public void run() 
-			    {
-			    	try 
-			    	{
-						Thread.sleep(delay);
-					} 
-			    	catch (InterruptedException e) 
-			    	{
-						e.printStackTrace();
-					}
-			    	sendMessage("http://goo.gl/SK7140"); // The link to the ban appeals page
-			    }
-			});
-			t.start();
+			sendDelayedMessage("http://goo.gl/SK7140", 1); // The link to the ban appeals page
 		}
 		else if(messageID == "explain_teaming")
 		{
 			sendMessage("Teaming is when the gunner knows who the murderer is and purposefully shoots an innocent.");
 			
-			Thread t = new Thread(new Runnable() 
-			{
-			    public void run() 
-			    {
-			    	try 
-			    	{
-						Thread.sleep(delay);
-					} 
-			    	catch (InterruptedException e) 
-			    	{
-						e.printStackTrace();
-					}
-			    	sendMessage("It is against the rules to team.");
-			    }
-			});
-			t.start();
+			sendDelayedMessage("It is against the rules to team.", 1);
 		}
 		else if(messageID == "explain_rdm")
 		{
 			sendMessage("RDMing, or random killing, is when a player has a gun and shoots a random person not knowing whether");
 			
-			Thread t = new Thread(new Runnable() 
-			{
-			    public void run() 
-			    {
-			    	try 
-			    	{
-						Thread.sleep(delay);
-					} 
-			    	catch (InterruptedException e) 
-			    	{
-						e.printStackTrace();
-					}
-			    	sendMessage("they're innocent or not. RDMing is not against the rules.");
-			    }
-			});
-			t.start();
+			sendDelayedMessage("they're innocent or not. RDMing is not against the rules.", 1);
 		}
 		else if(messageID == "explain_argue")
 		{
 			sendMessage("If you disagree with the punishment that was received, you may go to the forum to discuss the issue.");
 			
-			Thread t = new Thread(new Runnable() 
-			{
-			    public void run() 
-			    {
-			    	try 
-			    	{
-						Thread.sleep(delay);
-					} 
-			    	catch (InterruptedException e) 
-			    	{
-						e.printStackTrace();
-					}
-			    	sendMessage("http://goo.gl/SK7140"); // The link to the ban appeals page
-			    }
-			});
-			t.start();
+			sendDelayedMessage("http://goo.gl/SK7140", 1); // The link to the ban appeals page
 			
-			Thread t1 = new Thread(new Runnable() 
-			{
-			    public void run() 
-			    {
-			    	try 
-			    	{
-						Thread.sleep(delay*2);
-					} 
-			    	catch (InterruptedException e) 
-			    	{
-						e.printStackTrace();
-					}
-			    	sendMessage("If you continue to debate over this punishment in-game, you will also receive punishment.");
-			    }
-			});
-			t1.start();
+			sendDelayedMessage("If you continue to debate over this punishment in-game, you will also receive a punishment.", 2);
 		}
 		else if(messageID == "custom_one")
 		{
@@ -347,22 +197,7 @@ public class MessageSender
 			
 			if (SaveHandling.getCustomOne2() != "")
 			{
-				Thread t = new Thread(new Runnable() 
-				{
-				    public void run() 
-				    {
-				    	try 
-				    	{
-							Thread.sleep(delay);
-						} 
-				    	catch (InterruptedException e) 
-				    	{
-							e.printStackTrace();
-						}
-				    	sendMessage(SaveHandling.getCustomOne2());
-				    }
-				});
-				t.start();
+				sendDelayedMessage(SaveHandling.getCustomOne2(), 1);
 			}
 		}
 		else if(messageID == "custom_two")
@@ -374,22 +209,7 @@ public class MessageSender
 			
 			if (SaveHandling.getCustomTwo2() != "")
 			{
-				Thread t = new Thread(new Runnable() 
-				{
-				    public void run() 
-				    {
-				    	try 
-				    	{
-							Thread.sleep(delay);
-						} 
-				    	catch (InterruptedException e) 
-				    	{
-							e.printStackTrace();
-						}
-				    	sendMessage(SaveHandling.getCustomTwo2());
-				    }
-				});
-				t.start();
+				sendDelayedMessage(SaveHandling.getCustomTwo2(), 1);
 			}
 		}
 	}
@@ -401,5 +221,29 @@ public class MessageSender
 	public static void sendMessage(String message)
 	{
 		Minecraft.getMinecraft().thePlayer.sendChatMessage(message);
+	}
+	
+	/**
+	 * Sends a delayed message.
+	 * @param message = The message to be sent.
+	 */
+	public static void sendDelayedMessage(final String message, final int delayMultiplier)
+	{
+		Thread t = new Thread(new Runnable() 
+		{
+		    public void run() 
+		    {
+		    	try 
+		    	{
+					Thread.sleep(delay * delayMultiplier);
+					sendMessage(message);
+				} 
+		    	catch (InterruptedException e) 
+		    	{
+					e.printStackTrace();
+				}
+		    }
+		});
+		t.start();
 	}
 }

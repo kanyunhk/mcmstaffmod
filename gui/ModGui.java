@@ -29,28 +29,30 @@ import net.minecraft.util.MovingObjectPosition;
 import net.playmcm.qwertysam.ModMain;
 import net.playmcm.qwertysam.io.SaveHandling;
 import net.playmcm.qwertysam.util.MessageSender;
+import net.playmcm.qwertysam.util.NameAutocomplete;
+import net.playmcm.qwertysam.util.UrlOpener;
 
 public class ModGui extends GuiScreen
-{
+{	
 	/** The pixels between the GUI and the top of the screen **/
-	private final int spaceFromTop = 20;
+	protected final int spaceFromTop = 20;
 	
 	/** The horizontal spacing between the buttons **/
-	private final int xSpacing = 3;
+	protected final int xSpacing = 3;
 	
 	/** The width of the buttons **/
-	private final int smallButtonWidth = 120;
+	protected final int smallButtonWidth = 120;
 	
 	/** The text field where the user can input a name and TAB it in (hopefully later) **/
-    protected GuiTextField nameField;
+    protected static GuiTextField nameField;
 	
-    private String nameFieldText = "";
+    protected static String nameFieldText = "";
     
     /** Tells which option of reason for bunning is selected **/
-	private int selectedBunishment = 0;
+    protected static int selectedBunishment;
 	
 	/** Tells which severity is selected **/
-	private int selectedSeverity = 1;
+    protected static int selectedSeverity;
     
 	private boolean justEntered = true;
 	
@@ -67,50 +69,25 @@ public class ModGui extends GuiScreen
 	public void initGui()
 	{
 		this.justEntered = true;
+		this.firstLetter = true;
 		
 		this.buttonList.clear();
 		
 		Keyboard.enableRepeatEvents(true);
-    	this.nameField = new GuiTextField(0, this.fontRendererObj, this.width / 2 - smallButtonWidth - xSpacing, spaceFromTop + 20, smallButtonWidth, 20);
-    	this.nameField.setMaxStringLength(32);
-    	this.nameField.setText(nameFieldText);
-		
-    	//Adds the selected punishment reason to the UI
-    	switch (selectedBunishment)
-    	{
-    		case 0:
-    			this.buttonList.add(new GuiButton(100, this.width / 2 + xSpacing, spaceFromTop + 20, smallButtonWidth - xSpacing - 20, 20, "Swear"));
-    			break;
-    		case 1:
-    			this.buttonList.add(new GuiButton(101, this.width / 2 + xSpacing, spaceFromTop + 20, smallButtonWidth - xSpacing - 20, 20, "Spam"));
-    			break;
-    		case 2:
-    			this.buttonList.add(new GuiButton(102, this.width / 2 + xSpacing, spaceFromTop + 20, smallButtonWidth - xSpacing - 20, 20, "Harass"));
-    			break;
-    		case 3:
-    			this.buttonList.add(new GuiButton(103, this.width / 2 + xSpacing, spaceFromTop + 20, smallButtonWidth - xSpacing - 20, 20, "Hack"));
-    			break;
-    		case 4:
-    			this.buttonList.add(new GuiButton(104, this.width / 2 + xSpacing, spaceFromTop + 20, smallButtonWidth - xSpacing - 20, 20, "Cheat"));
-    			break;
-    		case 5:
-    			this.buttonList.add(new GuiButton(105, this.width / 2 + xSpacing, spaceFromTop + 20, smallButtonWidth - xSpacing - 20, 20, "Argue"));
-    			break;
-    	}
-    	
-    	//Adds the selected severity to the UI
-    	this.buttonList.add(new GuiButton(201, this.width / 2 + xSpacing + (smallButtonWidth - 20), spaceFromTop + 20, 20, 20, this.selectedSeverity + ""));
+    	nameField = new GuiTextField(0, this.fontRendererObj, this.width / 2 - smallButtonWidth - xSpacing, spaceFromTop + 20, smallButtonWidth, 20);
+    	nameField.setMaxStringLength(32);
+    	nameField.setText(this.nameFieldText);
     	
     	this.buttonList.add(new GuiIconButton(47, this.width / 2 + smallButtonWidth + (xSpacing * 2), spaceFromTop + 20, 20, 0, 20, 20));
     	
 		this.buttonList.add(new GuiButton(0, this.width / 2 - smallButtonWidth - xSpacing, spaceFromTop + 50, smallButtonWidth, 20, "How To Become Mod"));
-		this.buttonList.add(new GuiButton(1, this.width / 2 + xSpacing, spaceFromTop + 50, smallButtonWidth, 20, "Voting Link"));
+		//Voting link button
 
 		this.buttonList.add(new GuiButton(2, this.width / 2 - smallButtonWidth - xSpacing, spaceFromTop + 80, smallButtonWidth, 20, "Rules Link"));
-		this.buttonList.add(new GuiButton(4, this.width / 2 + xSpacing, spaceFromTop + 80, smallButtonWidth, 20, "Donation Link"));
+		//Donation link button
 		
 		this.buttonList.add(new GuiButton(6, this.width / 2 - smallButtonWidth - xSpacing, spaceFromTop + 110, smallButtonWidth, 20, "Reports Link"));
-		this.buttonList.add(new GuiButton(7, this.width / 2 + xSpacing, spaceFromTop + 110, smallButtonWidth, 20, "Ban Appeals Link"));
+		//Ban appeals link button
 		
 		this.buttonList.add(new GuiButton(3, this.width / 2 - smallButtonWidth - xSpacing, spaceFromTop + 140, 80, 20, "Expl. Teaming"));
 		this.buttonList.add(new GuiButton(13, this.width / 2 - 40, spaceFromTop + 140, 80, 20, "Expl. Argue"));
@@ -126,6 +103,47 @@ public class ModGui extends GuiScreen
 		this.buttonList.add(new GuiIconButton(20, this.width / 2 + 148, spaceFromTop + 84 + xSpacing, 60, 0, 20, 20));
 		this.buttonList.add(new GuiIconButton(21, this.width / 2 + 148, spaceFromTop + 104 + (xSpacing * 2), 40, 0, 20, 20));
 		this.buttonList.add(new GuiIconButton(22, this.width / 2 + 148, spaceFromTop + 124 + (xSpacing * 3), 100, 0, 20, 20));
+		
+		this.loadProprietaryButtons();
+	}
+	
+	/**
+	 * Loads the buttons that will not be there when the dropdown menus are down 
+	 */
+	public void loadProprietaryButtons()
+	{
+		//Adds the selected severity to the UI
+    	this.buttonList.add(new GuiButton(201, this.width / 2 + xSpacing + (smallButtonWidth - 20), spaceFromTop + 20, 20, 20, this.selectedSeverity + ""));
+    	
+		//Adds the selected punishment reason to the UI
+    	String bunTitle = "";
+    	switch (selectedBunishment)
+    	{
+    		case 0:
+    			bunTitle = "Swear";
+    			break;
+    		case 1:
+    			bunTitle= "Spam";
+    			break;
+    		case 2:
+    			bunTitle = "Harass";
+    			break;
+    		case 3:
+    			bunTitle= "Hack";
+    			break;
+    		case 4:
+    			bunTitle= "Cheat";
+    			break;
+    		case 5:
+    			bunTitle= "Argue";
+    			break;
+    	}
+    	
+    	this.buttonList.add(new GuiButton(100, this.width / 2 + xSpacing, spaceFromTop + 20, smallButtonWidth - xSpacing - 20, 20, bunTitle));
+    	
+		this.buttonList.add(new GuiButton(1, this.width / 2 + xSpacing, spaceFromTop + 50, smallButtonWidth, 20, "Voting Link"));
+		this.buttonList.add(new GuiButton(4, this.width / 2 + xSpacing, spaceFromTop + 80, smallButtonWidth, 20, "Donation Link"));
+		this.buttonList.add(new GuiButton(7, this.width / 2 + xSpacing, spaceFromTop + 110, smallButtonWidth, 20, "Ban Appeals Link"));
 	}
 	
 	/**
@@ -133,132 +151,43 @@ public class ModGui extends GuiScreen
      */
     public void updateScreen()
     {
-    	this.nameField.updateCursorCounter();
+    	nameField.updateCursorCounter();
     }
 	
+    private boolean firstLetter = true;
+    
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
     protected void keyTyped(char characterTyped, int keyCode)
     {
+    	if(this.firstLetter && !this.justEntered && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))// When you first open the GUI it will clear any names already in the text field if you start typing
+    	{
+    		nameField.setText("");
+    		this.firstLetter = false;
+    	}
+    	
     	if (keyCode == 15)
         {
-    		if(this.nameField.isFocused())
+    		if(nameField.isFocused())
     		{
-    			this.autocompletePlayerNames();
-        
+    			NameAutocomplete.autocompletePlayerNames(nameField);
     		}
         }
     	
-    	this.nameField.textboxKeyTyped(characterTyped, keyCode);
-    	
+    	nameField.textboxKeyTyped(characterTyped, keyCode);	
     }
     
-    private boolean playerNamesFound;
-    private boolean waitingOnAutocomplete;
-    private int autocompleteIndex;
-    private List foundPlayerNames = Lists.newArrayList();
-
-    public void autocompletePlayerNames()
+    /**
+     * The method that performs the autocomplete function (sent to from NameAutocomplete.java)
+     * @param playerList = The list of online players.
+     */
+    public static void performAutocomplete(String[] playerList)
     {
-        String var3;
-
-        if (this.playerNamesFound)
-        {
-            this.nameField.deleteFromCursor(this.nameField.func_146197_a(-1, this.nameField.getCursorPosition(), false) - this.nameField.getCursorPosition());
-
-            if (this.autocompleteIndex >= this.foundPlayerNames.size())
-            {
-                this.autocompleteIndex = 0;
-            }
-        }
-        else
-        {
-            int var1 = this.nameField.func_146197_a(-1, this.nameField.getCursorPosition(), false);
-            this.foundPlayerNames.clear();
-            this.autocompleteIndex = 0;
-            String var2 = this.nameField.getText().substring(var1).toLowerCase();
-            var3 = this.nameField.getText().substring(0, this.nameField.getCursorPosition());
-            this.sendAutocompleteRequest(var3, var2);
-
-            if (this.foundPlayerNames.isEmpty())
-            {
-                return;
-            }
-
-            this.playerNamesFound = true;
-            this.nameField.deleteFromCursor(var1 - this.nameField.getCursorPosition());
-        }
-
-        if (this.foundPlayerNames.size() > 1)
-        {
-            StringBuilder var4 = new StringBuilder();
-
-            for (Iterator var5 = this.foundPlayerNames.iterator(); var5.hasNext(); var4.append(var3))
-            {
-                var3 = (String)var5.next();
-
-                if (var4.length() > 0)
-                {
-                    var4.append(", ");
-                }
-            }
-
-            this.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new ChatComponentText(var4.toString()), 1);
-        }
-
-        this.nameField.writeText((String)this.foundPlayerNames.get(this.autocompleteIndex++));
-    }
-
-    private void sendAutocompleteRequest(String p_146405_1_, String p_146405_2_)
-    {
-        if (p_146405_1_.length() >= 1)
-        {
-            BlockPos var3 = null;
-
-            if (this.mc.objectMouseOver != null && this.mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-            {
-                var3 = this.mc.objectMouseOver.func_178782_a();
-            }
-
-            this.mc.thePlayer.sendQueue.addToSendQueue(new C14PacketTabComplete(p_146405_1_, var3));
-            this.waitingOnAutocomplete = true;
-        }
-    }
-    
-    public void onAutocompleteResponse(String[] p_146406_1_)
-    {
-        if (this.waitingOnAutocomplete)
-        {
-            this.playerNamesFound = false;
-            this.foundPlayerNames.clear();
-            String[] var2 = p_146406_1_;
-            int var3 = p_146406_1_.length;
-
-            for (int var4 = 0; var4 < var3; ++var4)
-            {
-                String var5 = var2[var4];
-
-                if (var5.length() > 0)
-                {
-                    this.foundPlayerNames.add(var5);
-                }
-            }
-
-            String var6 = this.nameField.getText().substring(this.nameField.func_146197_a(-1, this.nameField.getCursorPosition(), false));
-            String var7 = StringUtils.getCommonPrefix(p_146406_1_);
-
-            if (var7.length() > 0 && !var6.equalsIgnoreCase(var7))
-            {
-                this.nameField.deleteFromCursor(this.nameField.func_146197_a(-1, this.nameField.getCursorPosition(), false) - this.nameField.getCursorPosition());
-                this.nameField.writeText(var7);
-            }
-            else if (this.foundPlayerNames.size() > 0)
-            {
-                this.playerNamesFound = true;
-                this.autocompletePlayerNames();
-            }
-        }
+    	if (nameField.isFocused())
+    	{
+    		NameAutocomplete.onAutocompleteResponse(playerList, nameField);
+    	}
     }
     
     /**
@@ -275,7 +204,7 @@ public class ModGui extends GuiScreen
 			e.printStackTrace();
 		}
         
-        this.nameField.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
+        nameField.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
     }
     
 	/**
@@ -284,14 +213,20 @@ public class ModGui extends GuiScreen
      */
 	protected void actionPerformed(GuiButton button) throws IOException
     {
-        switch (button.id)
+		this.mainActionPerformed(button.id);
+		this.proprietaryActionPerformed(button.id);
+    }
+	
+	/**
+	 * Completes all the actions for the main buttons that will always be there.
+	 * @param buttonID = The ID of the button being pressed.
+	 */
+	public void mainActionPerformed(int buttonID)
+	{
+		switch (buttonID)
         {
             case 0:
             	MessageSender.sendInfo("become_mod");
-            	exitGui();
-                break;
-            case 1:
-            	MessageSender.sendInfo("vote_link");
             	exitGui();
                 break;
             case 2:
@@ -300,10 +235,6 @@ public class ModGui extends GuiScreen
             	break;
             case 3:
             	MessageSender.sendInfo("explain_teaming");
-            	exitGui();
-            	break;
-            case 4:
-            	MessageSender.sendInfo("donate_link");
             	exitGui();
             	break;
             case 5:
@@ -316,10 +247,6 @@ public class ModGui extends GuiScreen
             	break;
             case 6:
             	MessageSender.sendInfo("report_link");
-            	exitGui();
-            	break;
-            case 7:
-            	MessageSender.sendInfo("appeal_link");
             	exitGui();
             	break;
             case 8:
@@ -341,44 +268,50 @@ public class ModGui extends GuiScreen
             	exitGui();
             	break;
             case 20:
-            	ModMain.openURL("http://playmcm.net/"); //Forum Page
+            	UrlOpener.openURL("http://playmcm.net/"); //Forum Page
             	exitGui();
             	break;
             case 21:
-            	ModMain.openURL("https://goo.gl/C6FZrg"); //Mod Guidelines Documentation page
+            	UrlOpener.openURL("https://goo.gl/C6FZrg"); //Mod Guidelines Documentation page
             	exitGui();
             	break;
             case 22:
-            	ModMain.openURL("https://goo.gl/WMrAUT"); //Bugs and Suggestions page
+            	UrlOpener.openURL("https://goo.gl/WMrAUT"); //Bugs and Suggestions page
             	exitGui();
-            	break;
-            case 100:
-            	this.mc.displayGuiScreen(new ModGuiWithDropdownBun(this, 0, this.nameField.getText(), this.selectedSeverity));
-            	break;
-            case 101:
-            	this.mc.displayGuiScreen(new ModGuiWithDropdownBun(this, 1, this.nameField.getText(), this.selectedSeverity));
-            	break;
-            case 102:
-            	this.mc.displayGuiScreen(new ModGuiWithDropdownBun(this, 2, this.nameField.getText(), this.selectedSeverity));
-            	break;
-            case 103:
-            	this.mc.displayGuiScreen(new ModGuiWithDropdownBun(this, 3, this.nameField.getText(), this.selectedSeverity));
-            	break;
-            case 104:
-            	this.mc.displayGuiScreen(new ModGuiWithDropdownBun(this, 4, this.nameField.getText(), this.selectedSeverity));
-            	break;
-            case 105:
-            	this.mc.displayGuiScreen(new ModGuiWithDropdownBun(this, 5, this.nameField.getText(), this.selectedSeverity));
-            	break;
-            case 201:
-            	this.mc.displayGuiScreen(new ModGuiWithDropdownSeverity(this, this.selectedBunishment, this.nameField.getText(), this.selectedSeverity));
             	break;
             case 47:
             	this.sendBun();
             	exitGui();
             	break;
         }
-    }
+	}
+	
+	/**
+	 * Completes all the actions for the proprietary buttons that will not be there when the dropdown menus are out.
+	 * @param buttonID = The ID of the button being pressed.
+	 */
+	public void proprietaryActionPerformed(int buttonID)
+	{
+		switch (buttonID)
+        {
+			case 1:
+				MessageSender.sendInfo("vote_link");
+				exitGui();
+				break;
+			case 4:
+	        	MessageSender.sendInfo("donate_link");
+	        	exitGui();
+	        	break;
+			case 7:
+	        	MessageSender.sendInfo("appeal_link");
+	        	exitGui();
+	        	break;
+            case 100:
+            case 201:
+            	this.mc.displayGuiScreen(new ModGuiWithDropdowns(this.selectedBunishment, nameField.getText(), this.selectedSeverity, this));
+            	break;
+        }
+	}
 	
 	/**
      * Returns true if this GUI should pause the game when it is displayed in single-player
@@ -416,7 +349,9 @@ public class ModGui extends GuiScreen
     			break;
     	}
     	
-    	MessageSender.sendMessage("/warn " + nameField.getText() + " " + reason + " " + this.selectedSeverity);
+    	nameFieldText = nameField.getText();
+    	
+    	MessageSender.sendMessage("/warn " + nameFieldText + " " + reason + " " + this.selectedSeverity);
     }
 	
     /**
@@ -424,6 +359,7 @@ public class ModGui extends GuiScreen
      */
     public void exitGui()
     {
+    	nameFieldText = nameField.getText();
     	this.mc.displayGuiScreen((GuiScreen)null);
     }
     
@@ -435,27 +371,37 @@ public class ModGui extends GuiScreen
      */
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+		// Waits for ESC to be released before exiting GUI, prevents opening of the in-game pause menu upon exit of GUI
 		if ((!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) && waitForRelease)
 		{
 			waitForRelease = false;
 			this.exitGui();
 		}
-		
 		if((Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) && !this.justEntered)
 		{
 			waitForRelease = true;
 		}
-		else if (justEntered && !Keyboard.isKeyDown(Keyboard.KEY_GRAVE))
+		else if (justEntered && !Keyboard.isKeyDown(Keyboard.KEY_GRAVE)) // Waits for the GRAVE key to be released before focusing on the TextField or allowing exiting through the GRAVE key being pressed.
 		{
 			justEntered = false;
-			this.nameField.setFocused(true);
+			nameField.setFocused(true);
 		}
 			
         this.drawCenteredString(this.fontRendererObj, "Mod Tools", this.width / 2, spaceFromTop, 16777215);
         this.drawString(this.fontRendererObj, "/bun", this.width / 2 - 154, spaceFromTop + 26, 16777215);
         
-        this.nameField.drawTextBox();
+        nameField.drawTextBox();
         
         super.drawScreen(mouseX, mouseY, partialTicks);
+        
+        this.proprietaryDrawScreen();
     }
+	
+	/**
+	 * Draws all the proprietary screen features.
+	 */
+	public void proprietaryDrawScreen()
+	{
+		
+	}
 }

@@ -21,6 +21,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.playmcm.qwertysam.ModMain;
 import net.playmcm.qwertysam.io.SaveHandling;
 import net.playmcm.qwertysam.util.MessageSender;
+import net.playmcm.qwertysam.util.NameAutocomplete;
 
 /**
  * The options menu for the backup mod.
@@ -114,9 +115,17 @@ public class GuiCustomMessages extends GuiScreen
 
         if (keyCode == 15)
         {
-        	if (this.customTitle.isFocused() || this.customLine1.isFocused() || this.customLine2.isFocused())
+        	if (this.customTitle.isFocused())
         	{
-        		this.autocompletePlayerNames();
+        		NameAutocomplete.autocompletePlayerNames(this.customTitle);
+        	}
+        	else if (this.customLine1.isFocused())
+        	{
+        		NameAutocomplete.autocompletePlayerNames(this.customLine1);
+        	}
+        	else if (this.customLine2.isFocused())
+        	{
+        		NameAutocomplete.autocompletePlayerNames(this.customLine2);
         	}
         }
 
@@ -135,141 +144,24 @@ public class GuiCustomMessages extends GuiScreen
         ((GuiButton)this.buttonList.get(0)).enabled =  this.customTitle.getText().length() > 0;
     }
     
-    private boolean playerNamesFound;
-    private boolean waitingOnAutocomplete;
-    private int autocompleteIndex;
-    private List foundPlayerNames = Lists.newArrayList();
-
-    public void autocompletePlayerNames()
+    /**
+     * The method that performs the autocomplete function (sent to from NameAutocomplete.java)
+     * @param playerList = The list of online players.
+     */
+    public void performAutocomplete(String[] playerList)
     {
-        String var3;
-
-        GuiTextField theField = null;
-        
-        if (this.customTitle.isFocused())
-        {
-        	theField = this.customTitle;
-        }
-        else if (this.customLine1.isFocused())
-        {
-        	theField = this.customLine1;
-        }
-        else if (this.customLine2.isFocused())
-        {
-        	theField = this.customLine2;
-        }
-        
-        if (this.playerNamesFound)
-        {
-            theField.deleteFromCursor(theField.func_146197_a(-1, theField.getCursorPosition(), false) - theField.getCursorPosition());
-
-            if (this.autocompleteIndex >= this.foundPlayerNames.size())
-            {
-                this.autocompleteIndex = 0;
-            }
-        }
-        else
-        {
-            int var1 = theField.func_146197_a(-1, theField.getCursorPosition(), false);
-            this.foundPlayerNames.clear();
-            this.autocompleteIndex = 0;
-            String var2 = theField.getText().substring(var1).toLowerCase();
-            var3 = theField.getText().substring(0, theField.getCursorPosition());
-            this.sendAutocompleteRequest(var3, var2);
-
-            if (this.foundPlayerNames.isEmpty())
-            {
-                return;
-            }
-
-            this.playerNamesFound = true;
-            theField.deleteFromCursor(var1 - theField.getCursorPosition());
-        }
-
-        if (this.foundPlayerNames.size() > 1)
-        {
-            StringBuilder var4 = new StringBuilder();
-
-            for (Iterator var5 = this.foundPlayerNames.iterator(); var5.hasNext(); var4.append(var3))
-            {
-                var3 = (String)var5.next();
-
-                if (var4.length() > 0)
-                {
-                    var4.append(", ");
-                }
-            }
-
-            this.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new ChatComponentText(var4.toString()), 1);
-        }
-
-        theField.writeText((String)this.foundPlayerNames.get(this.autocompleteIndex++));
-    }
-
-    private void sendAutocompleteRequest(String p_146405_1_, String p_146405_2_)
-    {
-        if (p_146405_1_.length() >= 1)
-        {
-            BlockPos var3 = null;
-
-            if (this.mc.objectMouseOver != null && this.mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-            {
-                var3 = this.mc.objectMouseOver.func_178782_a();
-            }
-
-            this.mc.thePlayer.sendQueue.addToSendQueue(new C14PacketTabComplete(p_146405_1_, var3));
-            this.waitingOnAutocomplete = true;
-        }
-    }
-    
-    public void onAutocompleteResponse(String[] p_146406_1_)
-    {
-    	GuiTextField theField = null;
-        
-        if (this.customTitle.isFocused())
-        {
-        	theField = this.customTitle;
-        }
-        else if (this.customLine1.isFocused())
-        {
-        	theField = this.customLine1;
-        }
-        else if (this.customLine2.isFocused())
-        {
-        	theField = this.customLine2;
-        }
-    	
-        if (this.waitingOnAutocomplete)
-        {
-            this.playerNamesFound = false;
-            this.foundPlayerNames.clear();
-            String[] var2 = p_146406_1_;
-            int var3 = p_146406_1_.length;
-
-            for (int var4 = 0; var4 < var3; ++var4)
-            {
-                String var5 = var2[var4];
-
-                if (var5.length() > 0)
-                {
-                    this.foundPlayerNames.add(var5);
-                }
-            }
-
-            String var6 = theField.getText().substring(theField.func_146197_a(-1, theField.getCursorPosition(), false));
-            String var7 = StringUtils.getCommonPrefix(p_146406_1_);
-
-            if (var7.length() > 0 && !var6.equalsIgnoreCase(var7))
-            {
-            	theField.deleteFromCursor(theField.func_146197_a(-1, theField.getCursorPosition(), false) - theField.getCursorPosition());
-            	theField.writeText(var7);
-            }
-            else if (this.foundPlayerNames.size() > 0)
-            {
-                this.playerNamesFound = true;
-                this.autocompletePlayerNames();
-            }
-        }
+    	if (this.customTitle.isFocused())
+    	{
+			NameAutocomplete.onAutocompleteResponse(playerList, this.customTitle);
+    	}
+    	else if (this.customLine1.isFocused())
+    	{
+    		NameAutocomplete.onAutocompleteResponse(playerList, this.customLine1);
+    	}
+    	else if (this.customLine2.isFocused())
+    	{
+    		NameAutocomplete.onAutocompleteResponse(playerList, this.customLine2);
+    	}
     }
 
     /**

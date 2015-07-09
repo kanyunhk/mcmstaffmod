@@ -1,17 +1,9 @@
 package net.playmcm.qwertysam;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiOptions;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.playmcm.qwertysam.gui.ModGui;
-import net.playmcm.qwertysam.gui.ModGuiWithDropdownBun;
 import net.playmcm.qwertysam.io.SaveHandling;
 import net.playmcm.qwertysam.util.MessageSender;
 
@@ -84,22 +76,5 @@ public class ModMain
 	public static boolean isKeyPressed()
 	{
 		return Keyboard.isKeyDown(Keyboard.KEY_GRAVE); //The ~ key
-	}
-	
-	/**
-	 *  Opens a URL.
-	 * @param URL = The URL to open.
-	 */
-	public static void openURL(String URL)
-	{
-		// open the default web browser for the HTML page
-		try 
-		{
-			Desktop.getDesktop().browse(java.net.URI.create(URL));
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
 	}
 }
