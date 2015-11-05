@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.playmcm.qwertysam.gui.ModGui;
 import net.playmcm.qwertysam.io.SaveHandling;
 import net.playmcm.qwertysam.util.MessageSender;
+import net.playmcm.qwertysam.util.Messages;
 
 /**
  * Uses S3APacketTabComplete.java and Timer.java from Minecraft src code.
@@ -20,7 +21,7 @@ public class ModMain
 	 */
 	private static MessageSender messageSender = new MessageSender();
 	
-	private ModGui modGui = new ModGui(0, "", 1);
+	private ModGui modGui = new ModGui();
 	
 	/**
 	 * Filters out spam when a button is being held down.
@@ -39,6 +40,8 @@ public class ModMain
 	{
 		if(firstRun)
 		{
+			Messages.init();
+			
 			SaveHandling.loadOptions();
 			firstRun = false;
 			System.out.println("CustomOneTitle = " + SaveHandling.getCustomOneTitle());
@@ -47,6 +50,9 @@ public class ModMain
 			System.out.println("CustomTwoTitle = " + SaveHandling.getCustomTwoTitle());
 			System.out.println("CustomTwo1 = " + SaveHandling.getCustomTwo1());
 			System.out.println("CustomTwo2 = " + SaveHandling.getCustomTwo2());
+			System.out.println("CustomThreeTitle = " + SaveHandling.getCustomTwoTitle());
+			System.out.println("CustomThree1 = " + SaveHandling.getCustomTwo1());
+			System.out.println("CustomThree2 = " + SaveHandling.getCustomTwo2());
 		}
 		
 		if (Minecraft.getMinecraft().currentScreen == modGui || Minecraft.getMinecraft().currentScreen == null) //Stops the GUI from opening while not in-game

@@ -1,7 +1,5 @@
 package net.playmcm.qwertysam.gui;
 
-import java.io.IOException;
-
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.gui.GuiButton;
@@ -21,7 +19,8 @@ public class GuiCustomTwoEditor extends GuiCustomMessages
 	/**
      * Adds the buttons (and other controls) to the screen in question.
      */
-    public void initGui()
+    @Override
+	public void initGui()
     {
     	this.buttonList.add(new GuiButton(200, this.width / 2 - 100, 204, I18n.format("gui.done", new Object[0])));
     	
@@ -39,26 +38,6 @@ public class GuiCustomTwoEditor extends GuiCustomMessages
     	this.customLine2 = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 200, 150, 400, 20);
     	this.customLine2.setMaxStringLength(100);
     	this.customLine2.setText(SaveHandling.getCustomTwo2());
-    }
-	
-    /**
-     * Fired when a button is clicked.
-     * @param button = The ID of the button that was clicked.
-     */
-	protected void actionPerformed(GuiButton button) throws IOException
-    {
-        switch (button.id)
-        {
-            case 200:
-            	this.saveSettings();
-            	this.mc.displayGuiScreen(this.parentScreen);
-            	break;
-            case 3:
-            	this.customTitle.setText("Custom");
-            	this.customLine1.setText("");
-            	this.customLine2.setText("");
-            	break;
-        }
     }
     
 	/**

@@ -7,7 +7,7 @@ public class UrlOpener
 {
 	/**
 	 *  Opens a URL.
-	 * @param URL = The URL to open.
+	 * @param URL the URL to open
 	 */
 	public static void openURL(String URL)
 	{

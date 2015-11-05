@@ -6,8 +6,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
-import org.lwjgl.opengl.GL11;
-
 /**
  * A button that has a specific image, based off of GuiButtonLanguage.
  * @author Samson
@@ -19,16 +17,28 @@ public class GuiIconButton extends GuiButton
     /** Directory of the resource (the texture file). **/
     protected static final ResourceLocation textureDir = new ResourceLocation("qwertysam/textures/buttons.png");
     /** The horizontal position of the button in the image file. **/
-    private int xTextureOffset = 0;
+    private int xTextureOffset;
     /** The vertical position of the button in the image file. **/
-    private int yTextureOffset = 0;
+    private int yTextureOffset;
     /** The height of the button. **/
-    private int xTextureSize = 20;
+    private int xTextureSize;
     /** The width of the button. **/
-    private int yTextureSize = 20;
+    private int yTextureSize;
     /** Tells if the button is currently enabled. **/
     private boolean isEnabled;
     
+    /**
+     * Creates a new button with an image on it.
+     * @param buttonID = The ID of the button.
+     * @param xPosition = The horizontal position to draw the button at.
+     * @param yPosition = The vertical position to draw the button at.
+     * @param xTextureOffset = The horizontal position of the button in the image file.
+     * @param yTextureOffset = The vertical position of the button in the image file.
+     */
+    public GuiIconButton(int buttonID, int xPosition, int yPosition, int xTextureOffset, int yTextureOffset)
+    {
+    	this(buttonID, xPosition, yPosition, xTextureOffset, yTextureOffset, 20, 20);
+    }
     /**
      * Creates a new button with an image on it.
      * @param buttonID = The ID of the button.
@@ -52,7 +62,8 @@ public class GuiIconButton extends GuiButton
     /**
      * Draws this button to the screen.
      */
-    public void drawButton(Minecraft mc, int mouseX, int mouseY)
+    @Override
+	public void drawButton(Minecraft mc, int mouseX, int mouseY)
     {
         if (this.visible)
         {

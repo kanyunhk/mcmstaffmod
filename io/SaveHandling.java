@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import net.minecraft.client.Minecraft;
 
@@ -43,6 +41,15 @@ public class SaveHandling
 	/** Custom message two second line **/
 	private static String customTwo2;
 	
+	/** Custom messages three title **/
+	private static String customThreeTitle;
+	
+	/** Custom message three first line **/
+	private static String customThree1;
+	
+	/** Custom message three second line **/
+	private static String customThree2;
+	
 	public static String getCustomOneTitle()
 	{
 		return customOneTitle;
@@ -71,6 +78,21 @@ public class SaveHandling
 	public static String getCustomTwo2()
 	{
 		return customTwo2;
+	}
+	
+	public static String getCustomThreeTitle()
+	{
+		return customThreeTitle;
+	}
+	
+	public static String getCustomThree1()
+	{
+		return customThree1;
+	}
+	
+	public static String getCustomThree2()
+	{
+		return customThree2;
 	}
 	
 	public static void setCustomOneTitle(String newMessage)
@@ -103,6 +125,21 @@ public class SaveHandling
 		customTwo2 = newMessage;
 	}
 	
+	public static void setCustomThreeTitle(String newMessage)
+	{
+		customThreeTitle = newMessage;
+	}
+	
+	public static void setCustomThree1(String newMessage)
+	{
+		customThree1 = newMessage;
+	}
+	
+	public static void setCustomThree2(String newMessage)
+	{
+		customThree2 = newMessage;
+	}
+	
 	/**
 	 * Resets and saves all saved option variables.
 	 */
@@ -115,6 +152,10 @@ public class SaveHandling
 		customTwoTitle = "Custom";
 		customTwo1 = "";
 		customTwo2 = "";
+		
+		customThreeTitle = "Custom";
+		customThree1 = "";
+		customThree2 = "";
 	}
 	
 	/**
@@ -144,6 +185,9 @@ public class SaveHandling
             printer.println("customTwoTitle" + splitSymbol + customTwoTitle);
             printer.println("customTwo1" + splitSymbol + customTwo1);
             printer.println("customTwo2" + splitSymbol + customTwo2);
+            printer.println("customThreeTitle" + splitSymbol + customThreeTitle);
+            printer.println("customThree1" + splitSymbol + customThree1);
+            printer.println("customThree2" + splitSymbol + customThree2);
             
             printer.close();
         }
@@ -177,34 +221,54 @@ public class SaveHandling
                 {
                     String[] splitOptionsLine = loadedOptionLine.split(splitSymbol);
                     
-                    if(splitOptionsLine[0].equalsIgnoreCase("customOneTitle"))
+                    if (splitOptionsLine.length > 1) // If there is something on the line
                     {
-                    	setCustomOneTitle(splitOptionsLine[1]);
-                    }
-                    
-                    if(splitOptionsLine[0].equalsIgnoreCase("customOne1"))
-                    {
-                    	setCustomOne1(splitOptionsLine[1]);
-                    }
-
-                    else if(splitOptionsLine[0].equals("customOne2"))
-                    {
-                    	setCustomOne2(splitOptionsLine[1]);
-                    }
-                    
-                    if(splitOptionsLine[0].equalsIgnoreCase("customTwoTitle"))
-                    {
-                    	setCustomTwoTitle(splitOptionsLine[1]);
-                    }
-                    
-                    else if(splitOptionsLine[0].equals("customTwo1"))
-                    {
-                    	setCustomTwo1(splitOptionsLine[1]);
-                    }
-
-                    else if(splitOptionsLine[0].equals("customTwo2"))
-                    {
-                    	setCustomTwo2(splitOptionsLine[1]);
+                    	if (splitOptionsLine[1] != null)
+                    	{
+		                    if(splitOptionsLine[0].equalsIgnoreCase("customOneTitle"))
+		                    {
+		                    	setCustomOneTitle(splitOptionsLine[1]);
+		                    }
+		                    
+		                    else if(splitOptionsLine[0].equalsIgnoreCase("customOne1"))
+		                    {
+		                    	setCustomOne1(splitOptionsLine[1]);
+		                    }
+		
+		                    else if(splitOptionsLine[0].equals("customOne2"))
+		                    {
+		                    	setCustomOne2(splitOptionsLine[1]);
+		                    }
+		                    
+		                    else if(splitOptionsLine[0].equalsIgnoreCase("customTwoTitle"))
+		                    {
+		                    	setCustomTwoTitle(splitOptionsLine[1]);
+		                    }
+		                    
+		                    else if(splitOptionsLine[0].equals("customTwo1"))
+		                    {
+		                    	setCustomTwo1(splitOptionsLine[1]);
+		                    }
+		
+		                    else if(splitOptionsLine[0].equals("customTwo2"))
+		                    {
+		                    	setCustomTwo2(splitOptionsLine[1]);
+		                    }
+		                    else if(splitOptionsLine[0].equalsIgnoreCase("customThreeTitle"))
+		                    {
+		                    	setCustomThreeTitle(splitOptionsLine[1]);
+		                    }
+		                    
+		                    else if(splitOptionsLine[0].equals("customThree1"))
+		                    {
+		                    	setCustomThree1(splitOptionsLine[1]);
+		                    }
+		
+		                    else if(splitOptionsLine[0].equals("customThree2"))
+		                    {
+		                    	setCustomThree2(splitOptionsLine[1]);
+		                    }
+		                }
                     }
                 }
                 catch (Exception e)
