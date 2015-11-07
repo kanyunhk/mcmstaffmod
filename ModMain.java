@@ -40,19 +40,11 @@ public class ModMain
 	{
 		if(firstRun)
 		{
-			Messages.init();
+			System.out.println(Minecraft.getMinecraft().mcDataDir.getAbsolutePath());
 			
+			Messages.init();
 			SaveHandling.loadOptions();
 			firstRun = false;
-			System.out.println("CustomOneTitle = " + SaveHandling.getCustomOneTitle());
-			System.out.println("CustomOne1 = " + SaveHandling.getCustomOne1());
-			System.out.println("CustomOne2 = " + SaveHandling.getCustomOne2());
-			System.out.println("CustomTwoTitle = " + SaveHandling.getCustomTwoTitle());
-			System.out.println("CustomTwo1 = " + SaveHandling.getCustomTwo1());
-			System.out.println("CustomTwo2 = " + SaveHandling.getCustomTwo2());
-			System.out.println("CustomThreeTitle = " + SaveHandling.getCustomTwoTitle());
-			System.out.println("CustomThree1 = " + SaveHandling.getCustomTwo1());
-			System.out.println("CustomThree2 = " + SaveHandling.getCustomTwo2());
 		}
 		
 		if (Minecraft.getMinecraft().currentScreen == modGui || Minecraft.getMinecraft().currentScreen == null) //Stops the GUI from opening while not in-game
