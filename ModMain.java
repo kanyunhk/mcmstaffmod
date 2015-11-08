@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import net.minecraft.client.Minecraft;
 import net.playmcm.qwertysam.gui.ModGui;
 import net.playmcm.qwertysam.io.SaveHandling;
+import net.playmcm.qwertysam.util.AuthUtil;
 import net.playmcm.qwertysam.util.MessageSender;
 import net.playmcm.qwertysam.util.Messages;
 
@@ -40,6 +41,7 @@ public class ModMain
 	{
 		if(firstRun)
 		{
+			AuthUtil.canUse();
 			System.out.println(Minecraft.getMinecraft().mcDataDir.getAbsolutePath());
 			
 			Messages.init();

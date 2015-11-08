@@ -12,9 +12,9 @@ public class ExplainArgue extends Message
 	@Override
 	public MessageType type() 
 	{
-		return MessageType.EXPLAIN_RDM;
+		return MessageType.EXPLAIN_ARGUE;
 	}
-
+	
 	@Override
 	public List<List<String>> messages() 
 	{
