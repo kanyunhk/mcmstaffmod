@@ -18,10 +18,10 @@ import net.playmcm.qwertysam.messages.VotePage;
 import net.playmcm.qwertysam.messages.api.Message;
 import net.playmcm.qwertysam.messages.api.MessageType;
 
-public class Messages 
+public class Messages
 {
 	private static List<Message> messages = new ArrayList<Message>();
-	
+
 	public static void init()
 	{
 		registerMessage(new BecomingStaff());
@@ -37,17 +37,17 @@ public class Messages
 		registerMessage(new CustomTwo());
 		registerMessage(new CustomThree());
 	}
-	
+
 	public static List<String> getRandomMessage(MessageType type)
 	{
 		return getMessage(type).getRandomMessages();
 	}
-	
+
 	public static String getURL(MessageType type)
 	{
 		return getMessage(type).url();
 	}
-	
+
 	public static Message getMessage(MessageType type)
 	{
 		for (Message message : messages)
@@ -57,10 +57,9 @@ public class Messages
 				return message;
 			}
 		}
-		
 		return null;
 	}
-	
+
 	private static void registerMessage(Message message)
 	{
 		messages.add(message);

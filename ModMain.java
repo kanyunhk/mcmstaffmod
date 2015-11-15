@@ -11,11 +11,12 @@ import net.playmcm.qwertysam.util.Messages;
 
 /**
  * Uses S3APacketTabComplete.java and Timer.java from Minecraft src code.
+ * 
  * @date_created July 7th 2015
  * @date_updated July 8th 2015
  * @version 1.0
  */
-public class ModMain 
+public class ModMain
 {
 	/**
 	 * Sends the messages.
@@ -24,7 +25,7 @@ public class ModMain
 	private ModGui modGui;
 	private KeyPress triggerKey;
 	private boolean firstLoop;
-	
+
 	public ModMain()
 	{
 		messageSender = new MessageSender();
@@ -32,7 +33,7 @@ public class ModMain
 		triggerKey = new KeyPress(Keyboard.KEY_GRAVE);
 		firstLoop = true;
 	}
-	
+
 	/**
 	 * Has access to the main gameloop through Timer.updateTimer();
 	 */
@@ -44,18 +45,18 @@ public class ModMain
 			SaveHandling.loadOptions();
 			firstLoop = false;
 		}
-		
-		if (Minecraft.getMinecraft().currentScreen == modGui || Minecraft.getMinecraft().currentScreen == null) //Stops the GUI from opening while not in-game
+
+		if (Minecraft.getMinecraft().currentScreen == modGui || Minecraft.getMinecraft().currentScreen == null) // Stops the GUI from opening while not in-game
 		{
 			if (triggerKey.isPressed())
 			{
-				if (Minecraft.getMinecraft().currentScreen == modGui) //Exits if it's already on the menu
+				if (Minecraft.getMinecraft().currentScreen == modGui) // Exits if it's already on the menu
 				{
 					modGui.exitGui();
 				}
-				else //Goes to the menu if it's not there
+				else // Goes to the menu if it's not there
 				{
-					Minecraft.getMinecraft().displayGuiScreen(modGui); 
+					Minecraft.getMinecraft().displayGuiScreen(modGui);
 				}
 			}
 		}
