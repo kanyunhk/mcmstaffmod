@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import net.minecraft.client.Minecraft;
 import net.playmcm.qwertysam.gui.ModGui;
 import net.playmcm.qwertysam.io.SaveHandling;
+import net.playmcm.qwertysam.resource.KeyPress;
 import net.playmcm.qwertysam.util.MessageSender;
 import net.playmcm.qwertysam.util.Messages;
 
@@ -19,35 +20,34 @@ public class ModMain
 	/**
 	 * Sends the messages.
 	 */
-	private static MessageSender messageSender = new MessageSender();
+	private static MessageSender messageSender;
+	private ModGui modGui;
+	private KeyPress triggerKey;
+	private boolean firstLoop;
 	
-	private ModGui modGui = new ModGui();
-	
-	/**
-	 * Filters out spam when a button is being held down.
-	 */
-	private boolean filterSpam = false;
-	
-	/**
-	 * Loads saves upon the first runthrough.
-	 */
-	private boolean firstRun = true;
+	public ModMain()
+	{
+		messageSender = new MessageSender();
+		modGui = new ModGui();
+		triggerKey = new KeyPress(Keyboard.KEY_GRAVE);
+		firstLoop = true;
+	}
 	
 	/**
 	 * Has access to the main gameloop through Timer.updateTimer();
 	 */
 	public void gameLoop()
 	{
-		if(firstRun)
+		if (firstLoop)
 		{
 			Messages.init();
 			SaveHandling.loadOptions();
-			firstRun = false;
+			firstLoop = false;
 		}
 		
 		if (Minecraft.getMinecraft().currentScreen == modGui || Minecraft.getMinecraft().currentScreen == null) //Stops the GUI from opening while not in-game
 		{
-			if (isKeyPressed() && filterSpam == false) //Controls the flow of the buttons so that it doesn't get spammed when held down.
+			if (triggerKey.isPressed())
 			{
 				if (Minecraft.getMinecraft().currentScreen == modGui) //Exits if it's already on the menu
 				{
@@ -57,20 +57,7 @@ public class ModMain
 				{
 					Minecraft.getMinecraft().displayGuiScreen(modGui); 
 				}
-				filterSpam = true;
-			}
-			else if (!isKeyPressed() && filterSpam == true)
-			{
-				filterSpam = false;
 			}
 		}
-	}
-	
-	/**
-	 * @return Whether the ~ key is being pressed or not.
-	 */
-	public static boolean isKeyPressed()
-	{
-		return Keyboard.isKeyDown(Keyboard.KEY_GRAVE); //The ~ key
 	}
 }
