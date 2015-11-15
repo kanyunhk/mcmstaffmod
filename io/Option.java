@@ -139,14 +139,6 @@ public class Option
 	}
 	
 	/**
-	 * @return if this has been unchanged.
-	 */
-	public boolean isUnchanged()
-	{
-		return value.equals(originalValue);
-	}
-	
-	/**
 	 * @return the default value of this.
 	 */
 	public String getDefault()

@@ -24,7 +24,7 @@ public class ModGui extends GuiScreen
 	protected final int smallButtonWidth = 120;
 
 	/** The width of the buttons **/
-	protected final int linkButtonWidth = 120 - (xSpacing + 20);
+	protected final int linkButtonWidth = smallButtonWidth - 20 - xSpacing;
 
 	/** Tells whether the player just entered the GUI or not. */
 	private boolean justEntered = true;
@@ -80,16 +80,16 @@ public class ModGui extends GuiScreen
 		this.buttonList.add(new GuiButton(14, this.width / 2 + xSpacing, spaceFromTop + 80, smallButtonWidth, 20, "Explain RDM"));
 
 		// Custom 1
-		this.buttonList.add(new GuiButton(15, this.width / 2 + xSpacing, spaceFromTop + 110, linkButtonWidth, 20, mod.getOptions().getOption(OptionKey.customOneTitle).asString()));
-		this.buttonList.add(new GuiIconButton(16, this.width / 2 + (xSpacing * 2) + linkButtonWidth, spaceFromTop + 110, 0, 0, 20, 20));
+		this.buttonList.add(new GuiButton(15, this.width / 2 + (xSpacing * 2) + 20, spaceFromTop + 110, linkButtonWidth, 20, mod.getOptions().getOption(OptionKey.customOneTitle).asString()));
+		this.buttonList.add(new GuiIconButton(16, this.width / 2 + xSpacing, spaceFromTop + 110, 0, 0, 20, 20));
 
 		// Custom 2
-		this.buttonList.add(new GuiButton(17, this.width / 2 + xSpacing, spaceFromTop + 140, linkButtonWidth, 20, mod.getOptions().getOption(OptionKey.customTwoTitle).asString()));
-		this.buttonList.add(new GuiIconButton(18, this.width / 2 + (xSpacing * 2) + linkButtonWidth, spaceFromTop + 140, 0, 0, 20, 20));
+		this.buttonList.add(new GuiButton(17, this.width / 2 + (xSpacing * 2) + 20, spaceFromTop + 140, linkButtonWidth, 20, mod.getOptions().getOption(OptionKey.customTwoTitle).asString()));
+		this.buttonList.add(new GuiIconButton(18, this.width / 2 + xSpacing, spaceFromTop + 140, 0, 0, 20, 20));
 
 		// Custom 3
-		this.buttonList.add(new GuiButton(23, this.width / 2 + xSpacing, spaceFromTop + 170, linkButtonWidth, 20, mod.getOptions().getOption(OptionKey.customThreeTitle).asString()));
-		this.buttonList.add(new GuiIconButton(24, this.width / 2 + (xSpacing * 2) + linkButtonWidth, spaceFromTop + 170, 0, 0, 20, 20));
+		this.buttonList.add(new GuiButton(23, this.width / 2 + (xSpacing * 2) + 20, spaceFromTop + 170, linkButtonWidth, 20, mod.getOptions().getOption(OptionKey.customThreeTitle).asString()));
+		this.buttonList.add(new GuiIconButton(24, this.width / 2 + xSpacing, spaceFromTop + 170, 0, 0, 20, 20));
 
 		this.buttonList.add(new GuiIconButton(19, this.width / 2 + 148, (this.height / 2) - 40 - (xSpacing * 2), 80, 0, 20, 20));
 		this.buttonList.add(new GuiIconButton(20, this.width / 2 + 148, (this.height / 2) - 20 - xSpacing, 60, 0, 20, 20));

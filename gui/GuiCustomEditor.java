@@ -23,14 +23,17 @@ public class GuiCustomEditor extends GuiScreen
 	/** The custom text field where the user can input their own title **/
 	protected GuiTextField customTitle;
 	protected String customTitleKey;
+	protected String originalTitle;
 
 	/** The custom text field where the user can input their own first line of text **/
 	protected GuiTextField customLine1;
 	protected String customLine1Key;
+	protected String originalLine1;
 
 	/** The custom text field where the user can input their own second line of text **/
 	protected GuiTextField customLine2;
 	protected String customLine2Key;
+	protected String originalLine2;
 
 	protected OptionManager saveManager;
 
@@ -46,6 +49,10 @@ public class GuiCustomEditor extends GuiScreen
 		this.customTitleKey = customTitleKey;
 		this.customLine1Key = customLine1Key;
 		this.customLine2Key = customLine2Key;
+		
+		originalTitle = saveManager.getOption(customTitleKey).asString();
+		originalLine1 = saveManager.getOption(customLine1Key).asString();
+		originalLine2 = saveManager.getOption(customLine2Key).asString();
 	}
 
 	/**
@@ -53,11 +60,18 @@ public class GuiCustomEditor extends GuiScreen
 	 */
 	private void saveSettings()
 	{
-		saveManager.getOption(customTitleKey).setString(this.customTitle.getText());
-		saveManager.getOption(customLine1Key).setString(this.customLine1.getText());
-		saveManager.getOption(customLine2Key).setString(this.customLine2.getText());
+		String newTitle = this.customTitle.getText();
+		String newLine1 = this.customLine1.getText();
+		String newLine2 = this.customLine2.getText();
+		
+		saveManager.getOption(customTitleKey).setString(newTitle);
+		saveManager.getOption(customLine1Key).setString(newLine1);
+		saveManager.getOption(customLine2Key).setString(newLine2);
 		// Only save options if something's been modified
-		if (!saveManager.getOption(customTitleKey).isUnchanged() || !saveManager.getOption(customTitleKey).isUnchanged() || !saveManager.getOption(customTitleKey).isUnchanged()) saveManager.saveOptions();
+		if (!(newTitle.equals(originalTitle) && newLine1.equals(originalLine1) && newLine2.equals(originalLine2)))
+		{
+			saveManager.saveOptions();
+		}
 	}
 
 	/**
@@ -105,16 +119,16 @@ public class GuiCustomEditor extends GuiScreen
 
 		Keyboard.enableRepeatEvents(true);
 		this.customTitle = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 104, 50, 100, 20);
-		this.customTitle.setText(saveManager.getOption(customTitleKey).asString());
+		this.customTitle.setText(originalTitle);
 		this.customTitle.setMaxStringLength(16);
 
 		this.customLine1 = new GuiTextField(1, this.fontRendererObj, this.width / 2 - 200, 100, 400, 20);
 		this.customLine1.setMaxStringLength(100);
-		this.customLine1.setText(saveManager.getOption(customLine1Key).asString());
+		this.customLine1.setText(originalLine1);
 
 		this.customLine2 = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 200, 150, 400, 20);
 		this.customLine2.setMaxStringLength(100);
-		this.customLine2.setText(saveManager.getOption(customLine2Key).asString());
+		this.customLine2.setText(originalLine2);
 	}
 
 	/**

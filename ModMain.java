@@ -13,9 +13,7 @@ import net.playmcm.qwertysam.util.MessageSender;
 /**
  * Uses Timer.java from Minecraft src code.
  * 
- * @date_created July 7th 2015
- * @date_updated July 8th 2015
- * @version 1.0
+ * @version 2.0
  */
 public class ModMain
 {
