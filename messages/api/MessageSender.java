@@ -1,4 +1,4 @@
-package net.playmcm.qwertysam.util;
+package net.playmcm.qwertysam.messages.api;
 
 import java.util.List;
 
@@ -7,10 +7,13 @@ import net.playmcm.qwertysam.io.OptionManager;
 import net.playmcm.qwertysam.log.LogType;
 import net.playmcm.qwertysam.log.QLogger;
 import net.playmcm.qwertysam.messages.MessageManager;
-import net.playmcm.qwertysam.messages.api.MessageType;
 
 public class MessageSender
 {
+	public static final char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+			'(', ')', '[', ']', '\'', '\"', '\\', '/', '<', '>', ',', '.', '!', '@', '#', '$', '%', '^', '&', '*', '+', '-', '_', '=', '|' };
+
 	/** The delay in milliseconds for sending delayed messages. */
 	public static final int delay = 200;
 
@@ -37,11 +40,17 @@ public class MessageSender
 				int i = 0;
 				for (String string : messageManager.getRandomMessage(type))
 				{
-					if (string != null && string != "")
+					boolean sendMessage = false;
+					if (string != "" && string != null)
 					{
-						sendDelayedMessage(string, i);
-						i++;
+						for (char character : alphabet)
+						{
+							if (string.toLowerCase().contains("" + character)) sendMessage = true;
+						}
 					}
+
+					if (sendMessage) sendDelayedMessage(string, i);
+					i++;
 				}
 			}
 		}

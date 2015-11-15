@@ -21,8 +21,8 @@ public class ExplainTeaming extends Message
 
 		List<String> var1 = new ArrayList<String>();
 
-		var1.add("Teaming is when the gunner knows who the murderer is and purposefully shoots an innocent.");
-		var1.add("It is against the rules to team.");
+		var1.add("Teaming is when the gunner knows who the murderer is and purposefully shoots an innocent,");
+		var1.add("or refuses to shoot the murderer. It is against the rules to team.");
 
 		messages.add(var1);
 

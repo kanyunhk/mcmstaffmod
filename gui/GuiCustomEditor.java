@@ -35,6 +35,11 @@ public class GuiCustomEditor extends GuiScreen
 	protected String customLine2Key;
 	protected String originalLine2;
 
+	/** The custom text field where the user can input their own second line of text **/
+	protected GuiTextField customLine3;
+	protected String customLine3Key;
+	protected String originalLine3;
+
 	protected OptionManager saveManager;
 
 	/**
@@ -42,17 +47,19 @@ public class GuiCustomEditor extends GuiScreen
 	 * 
 	 * @param guiParentScreen = The parent gui screen.
 	 */
-	public GuiCustomEditor(GuiScreen guiParentScreen, OptionManager saveManager, String customTitleKey, String customLine1Key, String customLine2Key)
+	public GuiCustomEditor(GuiScreen guiParentScreen, OptionManager saveManager, String customTitleKey, String customLine1Key, String customLine2Key, String customLine3Key)
 	{
 		this.parentScreen = guiParentScreen;
 		this.saveManager = saveManager;
 		this.customTitleKey = customTitleKey;
 		this.customLine1Key = customLine1Key;
 		this.customLine2Key = customLine2Key;
-		
+		this.customLine3Key = customLine3Key;
+
 		originalTitle = saveManager.getOption(customTitleKey).asString();
 		originalLine1 = saveManager.getOption(customLine1Key).asString();
 		originalLine2 = saveManager.getOption(customLine2Key).asString();
+		originalLine3 = saveManager.getOption(customLine3Key).asString();
 	}
 
 	/**
@@ -63,12 +70,14 @@ public class GuiCustomEditor extends GuiScreen
 		String newTitle = this.customTitle.getText();
 		String newLine1 = this.customLine1.getText();
 		String newLine2 = this.customLine2.getText();
-		
+		String newLine3 = this.customLine3.getText();
+
 		saveManager.getOption(customTitleKey).setString(newTitle);
 		saveManager.getOption(customLine1Key).setString(newLine1);
 		saveManager.getOption(customLine2Key).setString(newLine2);
+		saveManager.getOption(customLine3Key).setString(newLine3);
 		// Only save options if something's been modified
-		if (!(newTitle.equals(originalTitle) && newLine1.equals(originalLine1) && newLine2.equals(originalLine2)))
+		if (!(newTitle.equals(originalTitle) && newLine1.equals(originalLine1) && newLine2.equals(originalLine2) && newLine3.equals(originalLine3)))
 		{
 			saveManager.saveOptions();
 		}
@@ -92,6 +101,7 @@ public class GuiCustomEditor extends GuiScreen
 				this.customTitle.setText(saveManager.getOption(customTitleKey).getDefault());
 				this.customLine1.setText(saveManager.getOption(customLine1Key).getDefault());
 				this.customLine2.setText(saveManager.getOption(customLine2Key).getDefault());
+				this.customLine3.setText(saveManager.getOption(customLine3Key).getDefault());
 				break;
 		}
 	}
@@ -105,6 +115,7 @@ public class GuiCustomEditor extends GuiScreen
 		this.customTitle.updateCursorCounter();
 		this.customLine1.updateCursorCounter();
 		this.customLine2.updateCursorCounter();
+		this.customLine3.updateCursorCounter();
 	}
 
 	/**
@@ -122,13 +133,17 @@ public class GuiCustomEditor extends GuiScreen
 		this.customTitle.setText(originalTitle);
 		this.customTitle.setMaxStringLength(16);
 
-		this.customLine1 = new GuiTextField(1, this.fontRendererObj, this.width / 2 - 200, 100, 400, 20);
+		this.customLine1 = new GuiTextField(1, this.fontRendererObj, this.width / 2 - 200, 90, 400, 20);
 		this.customLine1.setMaxStringLength(100);
 		this.customLine1.setText(originalLine1);
 
-		this.customLine2 = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 200, 150, 400, 20);
+		this.customLine2 = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 200, 130, 400, 20);
 		this.customLine2.setMaxStringLength(100);
 		this.customLine2.setText(originalLine2);
+
+		this.customLine3 = new GuiTextField(3, this.fontRendererObj, this.width / 2 - 200, 170, 400, 20);
+		this.customLine3.setMaxStringLength(100);
+		this.customLine3.setText(originalLine3);
 	}
 
 	/**
@@ -149,6 +164,7 @@ public class GuiCustomEditor extends GuiScreen
 		this.customTitle.textboxKeyTyped(characterTyped, keyCode);
 		this.customLine1.textboxKeyTyped(characterTyped, keyCode);
 		this.customLine2.textboxKeyTyped(characterTyped, keyCode);
+		this.customLine3.textboxKeyTyped(characterTyped, keyCode);
 
 		if (keyCode == 28 || keyCode == 156)
 		{
@@ -180,9 +196,10 @@ public class GuiCustomEditor extends GuiScreen
 			e.printStackTrace();
 		}
 
-		this.customLine1.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
 		this.customTitle.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
+		this.customLine1.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
 		this.customLine2.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
+		this.customLine3.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
 	}
 
 	/** Tells Minecraft it's ready to exit the gui as soon as the player lets go of ESC. */
@@ -199,22 +216,19 @@ public class GuiCustomEditor extends GuiScreen
 
 		this.drawString(this.fontRendererObj, "Title", this.width / 2 - 84, 38, 16777215);
 
-		this.drawString(this.fontRendererObj, "Line 1", this.width / 2 - 180, 88, 16777215);
+		this.drawString(this.fontRendererObj, "Line 1", this.width / 2 - 180, 78, 16777215);
 
-		this.drawString(this.fontRendererObj, "Line 2", this.width / 2 - 180, 138, 16777215);
+		this.drawString(this.fontRendererObj, "Line 2", this.width / 2 - 180, 118, 16777215);
+
+		this.drawString(this.fontRendererObj, "Line 3", this.width / 2 - 180, 158, 16777215);
 
 		this.customTitle.drawTextBox();
 		this.customLine1.drawTextBox();
 		this.customLine2.drawTextBox();
+		this.customLine3.drawTextBox();
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
 		{
-			waitForRelease = true;
-		}
-		// Waits for ESC to be released before exiting GUI, prevents opening of the in-game pause menu upon exit of GUI
-		else if ((!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) && waitForRelease)
-		{
-			waitForRelease = false;
 			this.mc.displayGuiScreen(parentScreen);
 		}
 
