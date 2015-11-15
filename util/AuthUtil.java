@@ -1,6 +1,8 @@
 package net.playmcm.qwertysam.util;
 
 import net.minecraft.client.Minecraft;
+import net.playmcm.qwertysam.log.LogType;
+import net.playmcm.qwertysam.log.QLogger;
 
 public class AuthUtil
 {
@@ -24,7 +26,7 @@ public class AuthUtil
 		{
 			String uuid = Minecraft.getMinecraft().getSession().getPlayerID();
 
-			System.out.println("[AuthUtil]: " + uuid);
+			QLogger.log(LogType.AUTHUTIL, "UUID = " + uuid);
 
 			canUse = false;
 			for (String authedUUID : authenticatedUUIDs)
@@ -32,7 +34,7 @@ public class AuthUtil
 				if (authedUUID.equals(uuid)) canUse = true;
 			}
 
-			System.out.println("[AuthUtil]: Can Use? " + canUse);
+			QLogger.log(LogType.AUTHUTIL, canUse ? "Authentication successful!" : "Authentication failed.");
 			hasInit = true;
 		}
 		return canUse;

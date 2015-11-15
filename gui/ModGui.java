@@ -6,10 +6,10 @@ import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.playmcm.qwertysam.io.SaveHandling;
+import net.playmcm.qwertysam.ModMain;
+import net.playmcm.qwertysam.io.OptionKey;
 import net.playmcm.qwertysam.messages.api.MessageType;
 import net.playmcm.qwertysam.messages.api.URL;
-import net.playmcm.qwertysam.util.MessageSender;
 import net.playmcm.qwertysam.util.UrlOpener;
 
 public class ModGui extends GuiScreen
@@ -28,6 +28,14 @@ public class ModGui extends GuiScreen
 
 	/** Tells whether the player just entered the GUI or not. */
 	private boolean justEntered = true;
+
+	private ModMain mod;
+
+	public ModGui(ModMain mod)
+	{
+		super();
+		this.mod = mod;
+	}
 
 	@Override
 	public void initGui()
@@ -72,15 +80,15 @@ public class ModGui extends GuiScreen
 		this.buttonList.add(new GuiButton(14, this.width / 2 + xSpacing, spaceFromTop + 80, smallButtonWidth, 20, "Explain RDM"));
 
 		// Custom 1
-		this.buttonList.add(new GuiButton(15, this.width / 2 + xSpacing, spaceFromTop + 110, linkButtonWidth, 20, SaveHandling.getCustomOneTitle()));
+		this.buttonList.add(new GuiButton(15, this.width / 2 + xSpacing, spaceFromTop + 110, linkButtonWidth, 20, mod.getOptions().getOption(OptionKey.customOneTitle).asString()));
 		this.buttonList.add(new GuiIconButton(16, this.width / 2 + (xSpacing * 2) + linkButtonWidth, spaceFromTop + 110, 0, 0, 20, 20));
 
 		// Custom 2
-		this.buttonList.add(new GuiButton(17, this.width / 2 + xSpacing, spaceFromTop + 140, linkButtonWidth, 20, SaveHandling.getCustomTwoTitle()));
+		this.buttonList.add(new GuiButton(17, this.width / 2 + xSpacing, spaceFromTop + 140, linkButtonWidth, 20, mod.getOptions().getOption(OptionKey.customTwoTitle).asString()));
 		this.buttonList.add(new GuiIconButton(18, this.width / 2 + (xSpacing * 2) + linkButtonWidth, spaceFromTop + 140, 0, 0, 20, 20));
 
 		// Custom 3
-		this.buttonList.add(new GuiButton(23, this.width / 2 + xSpacing, spaceFromTop + 170, linkButtonWidth, 20, SaveHandling.getCustomThreeTitle()));
+		this.buttonList.add(new GuiButton(23, this.width / 2 + xSpacing, spaceFromTop + 170, linkButtonWidth, 20, mod.getOptions().getOption(OptionKey.customThreeTitle).asString()));
 		this.buttonList.add(new GuiIconButton(24, this.width / 2 + (xSpacing * 2) + linkButtonWidth, spaceFromTop + 170, 0, 0, 20, 20));
 
 		this.buttonList.add(new GuiIconButton(19, this.width / 2 + 148, (this.height / 2) - 40 - (xSpacing * 2), 80, 0, 20, 20));
@@ -100,81 +108,81 @@ public class ModGui extends GuiScreen
 		switch (button.id)
 		{
 			case 0:
-				MessageSender.sendMessage(MessageType.BECOME_STAFF);
+				mod.message().sendMessage(MessageType.BECOME_STAFF);
 				exitGui();
 				break;
 			case 1:
-				MessageSender.sendMessage(MessageType.BECOME_STAFF, true);
+				mod.message().sendMessage(MessageType.BECOME_STAFF, true);
 				exitGui();
 				break;
 			case 2:
-				MessageSender.sendMessage(MessageType.RULES);
+				mod.message().sendMessage(MessageType.RULES);
 				exitGui();
 				break;
 			case 3:
-				MessageSender.sendMessage(MessageType.RULES, true);
+				mod.message().sendMessage(MessageType.RULES, true);
 				exitGui();
 				break;
 			case 4:
-				MessageSender.sendMessage(MessageType.REPORTS);
+				mod.message().sendMessage(MessageType.REPORTS);
 				exitGui();
 				break;
 			case 5:
-				MessageSender.sendMessage(MessageType.REPORTS, true);
+				mod.message().sendMessage(MessageType.REPORTS, true);
 				exitGui();
 				break;
 			case 6:
-				MessageSender.sendMessage(MessageType.VOTE);
+				mod.message().sendMessage(MessageType.VOTE);
 				exitGui();
 				break;
 			case 7:
-				MessageSender.sendMessage(MessageType.VOTE, true);
+				mod.message().sendMessage(MessageType.VOTE, true);
 				exitGui();
 				break;
 			case 8:
-				MessageSender.sendMessage(MessageType.DONATE);
+				mod.message().sendMessage(MessageType.DONATE);
 				exitGui();
 				break;
 			case 9:
-				MessageSender.sendMessage(MessageType.DONATE, true);
+				mod.message().sendMessage(MessageType.DONATE, true);
 				exitGui();
 				break;
 			case 10:
-				MessageSender.sendMessage(MessageType.BAN_APPEALS);
+				mod.message().sendMessage(MessageType.BAN_APPEALS);
 				exitGui();
 				break;
 			case 11:
-				MessageSender.sendMessage(MessageType.BAN_APPEALS, true);
+				mod.message().sendMessage(MessageType.BAN_APPEALS, true);
 				exitGui();
 				break;
 			case 12:
-				MessageSender.sendMessage(MessageType.EXPLAIN_TEAMING);
+				mod.message().sendMessage(MessageType.EXPLAIN_TEAMING);
 				exitGui();
 				break;
 			case 13:
-				MessageSender.sendMessage(MessageType.EXPLAIN_ARGUE);
+				mod.message().sendMessage(MessageType.EXPLAIN_ARGUE);
 				exitGui();
 				break;
 			case 14:
-				MessageSender.sendMessage(MessageType.EXPLAIN_RDM);
+				mod.message().sendMessage(MessageType.EXPLAIN_RDM);
 				exitGui();
 				break;
 			case 15:
-				MessageSender.sendMessage(MessageType.CUSTOM1);
+				mod.message().sendMessage(MessageType.CUSTOM1);
 				exitGui();
 				break;
 			case 16:
-				this.mc.displayGuiScreen(new GuiCustomOneEditor(this));
+				this.mc.displayGuiScreen(new GuiCustomEditor(this, mod.getOptions(), OptionKey.customOneTitle, OptionKey.customOne1, OptionKey.customOne2));
 				break;
 			case 17:
-				MessageSender.sendMessage(MessageType.CUSTOM2);
+				mod.message().sendMessage(MessageType.CUSTOM2);
 				exitGui();
 				break;
 			case 18:
-				this.mc.displayGuiScreen(new GuiCustomTwoEditor(this));
+				this.mc.displayGuiScreen(new GuiCustomEditor(this, mod.getOptions(), OptionKey.customTwoTitle, OptionKey.customTwo1, OptionKey.customTwo2));
 				break;
 			case 19:
-				MessageSender.sendDelayedMessage("/warn help", 0); // Sends the command that displays info on the /warn command usage
+				mod.message().sendDelayedMessage("/warn help", 0); // Sends the command that displays info on the /warn command usage
 				exitGui();
 				break;
 			case 20:
@@ -190,11 +198,11 @@ public class ModGui extends GuiScreen
 				exitGui();
 				break;
 			case 23:
-				MessageSender.sendMessage(MessageType.CUSTOM3);
+				mod.message().sendMessage(MessageType.CUSTOM3);
 				exitGui();
 				break;
 			case 24:
-				this.mc.displayGuiScreen(new GuiCustomThreeEditor(this));
+				this.mc.displayGuiScreen(new GuiCustomEditor(this, mod.getOptions(), OptionKey.customThreeTitle, OptionKey.customThree1, OptionKey.customThree2));
 				break;
 		}
 	}

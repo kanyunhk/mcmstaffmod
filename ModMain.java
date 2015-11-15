@@ -4,13 +4,14 @@ import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
 import net.playmcm.qwertysam.gui.ModGui;
-import net.playmcm.qwertysam.io.SaveHandling;
+import net.playmcm.qwertysam.io.Option;
+import net.playmcm.qwertysam.io.OptionKey;
+import net.playmcm.qwertysam.io.OptionManager;
 import net.playmcm.qwertysam.resource.KeyPress;
 import net.playmcm.qwertysam.util.MessageSender;
-import net.playmcm.qwertysam.util.Messages;
 
 /**
- * Uses S3APacketTabComplete.java and Timer.java from Minecraft src code.
+ * Uses Timer.java from Minecraft src code.
  * 
  * @date_created July 7th 2015
  * @date_updated July 8th 2015
@@ -18,20 +19,29 @@ import net.playmcm.qwertysam.util.Messages;
  */
 public class ModMain
 {
-	/**
-	 * Sends the messages.
-	 */
-	private static MessageSender messageSender;
 	private ModGui modGui;
 	private KeyPress triggerKey;
-	private boolean firstLoop;
-
+	private OptionManager options;
+	private MessageSender messageSender;
+	
 	public ModMain()
 	{
-		messageSender = new MessageSender();
-		modGui = new ModGui();
+		modGui = new ModGui(this);
 		triggerKey = new KeyPress(Keyboard.KEY_GRAVE);
-		firstLoop = true;
+
+		options = new OptionManager("mcm_options.txt");
+		options.registerOption(new Option(OptionKey.customOneTitle, "Custom 1"));
+		options.registerOption(new Option(OptionKey.customOne1, ""));
+		options.registerOption(new Option(OptionKey.customOne2, ""));
+		options.registerOption(new Option(OptionKey.customTwoTitle, "Custom 2"));
+		options.registerOption(new Option(OptionKey.customTwo1, ""));
+		options.registerOption(new Option(OptionKey.customTwo2, ""));
+		options.registerOption(new Option(OptionKey.customThreeTitle, "Custom 3"));
+		options.registerOption(new Option(OptionKey.customThree1, ""));
+		options.registerOption(new Option(OptionKey.customThree2, ""));
+		options.loadOptions();
+
+		messageSender = new MessageSender(this.options);
 	}
 
 	/**
@@ -39,13 +49,6 @@ public class ModMain
 	 */
 	public void gameLoop()
 	{
-		if (firstLoop)
-		{
-			Messages.init();
-			SaveHandling.loadOptions();
-			firstLoop = false;
-		}
-
 		if (Minecraft.getMinecraft().currentScreen == modGui || Minecraft.getMinecraft().currentScreen == null) // Stops the GUI from opening while not in-game
 		{
 			if (triggerKey.isPressed())
@@ -60,5 +63,15 @@ public class ModMain
 				}
 			}
 		}
+	}
+
+	public OptionManager getOptions()
+	{
+		return options;
+	}
+
+	public MessageSender message()
+	{
+		return messageSender;
 	}
 }

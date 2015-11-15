@@ -8,35 +8,44 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
-import net.playmcm.qwertysam.io.SaveHandling;
+import net.playmcm.qwertysam.io.OptionManager;
 
 /**
  * The options menu for the backup mod.
  * 
  * @author Samson
  */
-public class GuiCustomMessages extends GuiScreen
+public class GuiCustomEditor extends GuiScreen
 {
 	/** The parent gui screen. **/
 	protected final GuiScreen parentScreen;
 
 	/** The custom text field where the user can input their own title **/
 	protected GuiTextField customTitle;
+	protected String customTitleKey;
 
 	/** The custom text field where the user can input their own first line of text **/
 	protected GuiTextField customLine1;
+	protected String customLine1Key;
 
 	/** The custom text field where the user can input their own second line of text **/
 	protected GuiTextField customLine2;
+	protected String customLine2Key;
+
+	protected OptionManager saveManager;
 
 	/**
 	 * The Gui that displays and allows you to change the options.
 	 * 
 	 * @param guiParentScreen = The parent gui screen.
 	 */
-	public GuiCustomMessages(GuiScreen guiParentScreen)
+	public GuiCustomEditor(GuiScreen guiParentScreen, OptionManager saveManager, String customTitleKey, String customLine1Key, String customLine2Key)
 	{
 		this.parentScreen = guiParentScreen;
+		this.saveManager = saveManager;
+		this.customTitleKey = customTitleKey;
+		this.customLine1Key = customLine1Key;
+		this.customLine2Key = customLine2Key;
 	}
 
 	/**
@@ -44,7 +53,11 @@ public class GuiCustomMessages extends GuiScreen
 	 */
 	private void saveSettings()
 	{
-		SaveHandling.saveOptions();
+		saveManager.getOption(customTitleKey).setString(this.customTitle.getText());
+		saveManager.getOption(customLine1Key).setString(this.customLine1.getText());
+		saveManager.getOption(customLine2Key).setString(this.customLine2.getText());
+		// Only save options if something's been modified
+		if (!saveManager.getOption(customTitleKey).isUnchanged() || !saveManager.getOption(customTitleKey).isUnchanged() || !saveManager.getOption(customTitleKey).isUnchanged()) saveManager.saveOptions();
 	}
 
 	/**
@@ -62,9 +75,9 @@ public class GuiCustomMessages extends GuiScreen
 				this.mc.displayGuiScreen(this.parentScreen);
 				break;
 			case 3:
-				this.customTitle.setText("Custom");
-				this.customLine1.setText("");
-				this.customLine2.setText("");
+				this.customTitle.setText(saveManager.getOption(customTitleKey).getDefault());
+				this.customLine1.setText(saveManager.getOption(customLine1Key).getDefault());
+				this.customLine2.setText(saveManager.getOption(customLine2Key).getDefault());
 				break;
 		}
 	}
@@ -87,6 +100,21 @@ public class GuiCustomMessages extends GuiScreen
 	public void initGui()
 	{
 		this.buttonList.add(new GuiButton(200, this.width / 2 - 100, 204, I18n.format("gui.done", new Object[0])));
+
+		this.buttonList.add(new GuiButton(3, this.width / 2 + 4, 50, 100, 20, "Reset Fields"));
+
+		Keyboard.enableRepeatEvents(true);
+		this.customTitle = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 104, 50, 100, 20);
+		this.customTitle.setText(saveManager.getOption(customTitleKey).asString());
+		this.customTitle.setMaxStringLength(16);
+
+		this.customLine1 = new GuiTextField(1, this.fontRendererObj, this.width / 2 - 200, 100, 400, 20);
+		this.customLine1.setMaxStringLength(100);
+		this.customLine1.setText(saveManager.getOption(customLine1Key).asString());
+
+		this.customLine2 = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 200, 150, 400, 20);
+		this.customLine2.setMaxStringLength(100);
+		this.customLine2.setText(saveManager.getOption(customLine2Key).asString());
 	}
 
 	/**
@@ -119,7 +147,7 @@ public class GuiCustomMessages extends GuiScreen
 				e.printStackTrace();
 			}
 		}
-		
+
 		((GuiButton) this.buttonList.get(0)).enabled = this.customTitle.getText().length() > 0;
 	}
 
