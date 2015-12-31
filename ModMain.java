@@ -22,13 +22,13 @@ public class ModMain
 	private MessageSender messageSender;
 
 	public static final boolean debug = true;
-	
+
 	public ModMain()
 	{
-		triggerKey = new KeyPress(Keyboard.KEY_GRAVE);
+		triggerKey = new KeyPress(Keyboard.KEY_GRAVE, true);
 
 		options = new OptionManager("mcm_options.txt");
-		
+
 		for (Option option : Option.values())
 		{
 			options.registerOption(option);
@@ -59,13 +59,11 @@ public class ModMain
 		}
 	}
 
+	/**
+	 * @return the mod's OptionManager.
+	 */
 	public OptionManager getOptions()
 	{
 		return options;
-	}
-
-	public MessageSender message()
-	{
-		return messageSender;
 	}
 }

@@ -138,12 +138,12 @@ public class GuiIconButton extends GuiButton
 	{
 		return tooltip != null;
 	}
-	
+
 	public String tooltip()
 	{
 		return tooltip;
 	}
-	
+
 	/**
 	 * Sets if the button is enabled.
 	 * 

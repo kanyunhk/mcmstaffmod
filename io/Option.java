@@ -92,7 +92,7 @@ public enum Option
 	{
 		this(key, value, null);
 	}
-	
+
 	/**
 	 * An value with a key.
 	 * 
@@ -122,7 +122,7 @@ public enum Option
 	{
 		return value;
 	}
-	
+
 	/**
 	 * @return this value as a boolean.
 	 */
@@ -140,7 +140,7 @@ public enum Option
 	{
 		this.value = value;
 	}
-	
+
 	/**
 	 * Sets this value as a Boolean.
 	 * 
@@ -150,24 +150,24 @@ public enum Option
 	{
 		this.value = (value ? "true" : "false");
 	}
-	
+
 	/**
-	 * @return the default value of 
+	 * @return the default value of
 	 */
 	public String getDefault()
 	{
 		return originalValue;
 	}
-	
+
 	public static List<String> getValues(MessageType type)
 	{
 		List<String> messages = new ArrayList<String>();
-		
+
 		for (Option message : Option.values())
 		{
-			if (message.type == type) messages.add(message.value());
+			if (message.type == type && message.value() != null && message.value() != "") messages.add(message.value());
 		}
-		
+
 		return messages;
 	}
 }

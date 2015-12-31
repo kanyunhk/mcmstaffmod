@@ -16,23 +16,25 @@ public class MessageSender
 	/** The delay in milliseconds for sending delayed messages. */
 	public static final int delay = 200;
 
-	public MessageSender() {}
+	public MessageSender()
+	{
+	}
 
-	public void sendMessage(MessageType type, boolean autoLink)
+	public static void sendMessage(MessageType type, boolean autoLink)
 	{
 		sendMessage(type, false, autoLink);
 	}
 
-	public void sendMessage(MessageType type, boolean justLink, boolean autoLink)
+	public static void sendMessage(MessageType type, boolean justLink, boolean autoLink)
 	{
 		if (!justLink)
 		{
 			if (Option.getValues(type) != null)
 			{
 				List<String> messages = Option.getValues(type);
-				
+
 				if (autoLink) messages.add(type.getURL());
-				
+
 				int i = 0;
 				for (String string : messages)
 				{
@@ -61,7 +63,7 @@ public class MessageSender
 	 * 
 	 * @param message the message to be sent
 	 */
-	public void sendMessage(String message)
+	public static void sendMessage(String message)
 	{
 		sendDelayedMessage(message, 0);
 	}
@@ -71,7 +73,7 @@ public class MessageSender
 	 * 
 	 * @param message the message to be sent
 	 */
-	public void sendMessage(String message, int delayMultiplier)
+	public static void sendMessage(String message, int delayMultiplier)
 	{
 		sendDelayedMessage(message, delayMultiplier);
 	}
@@ -81,7 +83,7 @@ public class MessageSender
 	 * 
 	 * @param message the message to be sent
 	 */
-	public void sendDelayedMessage(final String message, final int delayMultiplier)
+	public static void sendDelayedMessage(final String message, final int delayMultiplier)
 	{
 		new Thread(new Runnable()
 		{

@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiYesNo;
 import net.playmcm.qwertysam.ModMain;
 import net.playmcm.qwertysam.io.Option;
+import net.playmcm.qwertysam.messages.api.MessageSender;
 import net.playmcm.qwertysam.messages.api.MessageType;
 import net.playmcm.qwertysam.messages.api.URL;
 import net.playmcm.qwertysam.util.UrlOpener;
@@ -36,7 +36,7 @@ public class ModGui extends GuiScreen
 
 	/** Tells Minecraft it's ready to exit the gui as soon as the player lets go of ESC. */
 	private boolean waitForRelease;
-	
+
 	private ModMain mod;
 
 	public ModGui(ModMain mod)
@@ -55,7 +55,9 @@ public class ModGui extends GuiScreen
 
 		// buttonList.add(new GuiIconButton(47, width / 2 + smallButtonWidth + (xSpacing * 2), spaceFromTop + 20, 20, 0, 20, 20));
 
-		if (mod.getOptions().getOption(Option.HEAVY_CUSTOMIZATION.key()).asBoolean())
+		boolean customize = mod.getOptions().getOption(Option.HEAVY_CUSTOMIZATION.key()).asBoolean();
+
+		if (customize)
 		{
 			// How to become mod
 			buttonList.add(new GuiButton(0, width / 2 - smallButtonWidth - (xSpacing * 2) - 20, spaceFromTop, linkButtonWidth, 20, "Becoming Staff"));
@@ -66,40 +68,40 @@ public class ModGui extends GuiScreen
 			buttonList.add(new GuiButton(2, width / 2 - smallButtonWidth - (xSpacing * 2) - 20, spaceFromTop + (ySpacing * 1), linkButtonWidth, 20, "Rules"));
 			buttonList.add(new GuiIconButton(3, width / 2 - smallButtonWidth + linkButtonWidth - (xSpacing + 20), spaceFromTop + (ySpacing * 1), smallButtonWidth, 0));
 			buttonList.add(new GuiIconButton(34, width / 2 - smallButtonWidth + linkButtonWidth, spaceFromTop + (ySpacing * 1), 0, 0));
-			
+
 			// Reports Link
 			buttonList.add(new GuiButton(4, width / 2 - smallButtonWidth - (xSpacing * 2) - 20, spaceFromTop + (ySpacing * 2), linkButtonWidth, 20, "Reporting"));
 			buttonList.add(new GuiIconButton(5, width / 2 - smallButtonWidth + linkButtonWidth - (xSpacing + 20), spaceFromTop + (ySpacing * 2), smallButtonWidth, 0));
 			buttonList.add(new GuiIconButton(35, width / 2 - smallButtonWidth + linkButtonWidth, spaceFromTop + (ySpacing * 2), 0, 0));
-			
+
 			// Ban Appeals Link
 			buttonList.add(new GuiButton(10, width / 2 - smallButtonWidth - (xSpacing * 2) - 20, spaceFromTop + (ySpacing * 3), linkButtonWidth, 20, "Ban Appeals"));
 			buttonList.add(new GuiIconButton(11, width / 2 - smallButtonWidth + linkButtonWidth - (xSpacing + 20), spaceFromTop + (ySpacing * 3), smallButtonWidth, 0));
 			buttonList.add(new GuiIconButton(36, width / 2 - smallButtonWidth + linkButtonWidth, spaceFromTop + (ySpacing * 3), 0, 0));
-			
+
 			// Vote Link
 			buttonList.add(new GuiButton(6, width / 2 - smallButtonWidth - (xSpacing * 2) - 20, spaceFromTop + (ySpacing * 4), linkButtonWidth, 20, "Voting"));
 			buttonList.add(new GuiIconButton(7, width / 2 - smallButtonWidth + linkButtonWidth - (xSpacing + 20), spaceFromTop + (ySpacing * 4), smallButtonWidth, 0));
 			buttonList.add(new GuiIconButton(37, width / 2 - smallButtonWidth + linkButtonWidth, spaceFromTop + (ySpacing * 4), 0, 0));
-			
+
 			// Donation Link
 			buttonList.add(new GuiButton(8, width / 2 - smallButtonWidth - (xSpacing * 2) - 20, spaceFromTop + (ySpacing * 5), linkButtonWidth, 20, "Donating"));
 			buttonList.add(new GuiIconButton(9, width / 2 - smallButtonWidth + linkButtonWidth - (xSpacing + 20), spaceFromTop + (ySpacing * 5), smallButtonWidth, 0));
 			buttonList.add(new GuiIconButton(38, width / 2 - smallButtonWidth + linkButtonWidth, spaceFromTop + (ySpacing * 5), 0, 0));
-			
+
 			// Forum Link
 			buttonList.add(new GuiButton(25, width / 2 - smallButtonWidth - (xSpacing * 2) - 20, spaceFromTop + (ySpacing * 6), linkButtonWidth, 20, "Forum Link"));
 			buttonList.add(new GuiIconButton(26, width / 2 - smallButtonWidth + linkButtonWidth - (xSpacing + 20), spaceFromTop + (ySpacing * 6), smallButtonWidth, 0));
 			buttonList.add(new GuiIconButton(39, width / 2 - smallButtonWidth + linkButtonWidth, spaceFromTop + (ySpacing * 6), 0, 0));
-			
+
 			// Explain Teaming
 			buttonList.add(new GuiButton(12, width / 2 + (xSpacing * 2) + 20, spaceFromTop, linkButtonWidth, 20, "Explain Teaming"));
 			buttonList.add(new GuiIconButton(31, width / 2 + xSpacing, spaceFromTop, 0, 0, 20, 20));
-			
+
 			// Explain Arguing
 			buttonList.add(new GuiButton(13, width / 2 + (xSpacing * 2) + 20, spaceFromTop + (ySpacing * 1), linkButtonWidth, 20, "Explain Arguing"));
 			buttonList.add(new GuiIconButton(30, width / 2 + xSpacing, spaceFromTop + (ySpacing * 1), 0, 0, 20, 20));
-			
+
 			// Explain RDM
 			buttonList.add(new GuiButton(14, width / 2 + (xSpacing * 2) + 20, spaceFromTop + (ySpacing * 2), linkButtonWidth, 20, "Explain RDM"));
 			buttonList.add(new GuiIconButton(29, width / 2 + xSpacing, spaceFromTop + (ySpacing * 2), 0, 0, 20, 20));
@@ -136,14 +138,14 @@ public class ModGui extends GuiScreen
 
 			// Explain Teaming
 			buttonList.add(new GuiButton(12, width / 2 + xSpacing, spaceFromTop, smallButtonWidth, 20, "Explain Teaming"));
-			
+
 			// Explain Arguing
 			buttonList.add(new GuiButton(13, width / 2 + xSpacing, spaceFromTop + (ySpacing * 1), smallButtonWidth, 20, "Explain Arguing"));
-			
+
 			// Explain RDM
 			buttonList.add(new GuiButton(14, width / 2 + xSpacing, spaceFromTop + (ySpacing * 2), smallButtonWidth, 20, "Explain RDM"));
 		}
-		
+
 		// Custom 1
 		buttonList.add(new GuiButton(15, width / 2 + (xSpacing * 2) + 20, spaceFromTop + (ySpacing * 3), linkButtonWidth, 20, mod.getOptions().getOption(Option.CUSTOM_ONE_TITLE.key()).value()));
 		buttonList.add(new GuiIconButton(16, width / 2 + xSpacing, spaceFromTop + (ySpacing * 3), 0, 0, 20, 20));
@@ -160,11 +162,14 @@ public class ModGui extends GuiScreen
 		buttonList.add(new GuiButton(27, width / 2 + (xSpacing * 2) + 20, spaceFromTop + (ySpacing * 6), linkButtonWidth, 20, mod.getOptions().getOption(Option.CUSTOM_FOUR_TITLE.key()).value()));
 		buttonList.add(new GuiIconButton(28, width / 2 + xSpacing, spaceFromTop + (ySpacing * 6), 0, 0, 20, 20));
 
-		buttonList.add(new GuiIconButton(32, "Toggle Customization", width / 2 + 148, (height / 2) - 60 - (xSpacing * 3), 0, 0));
-		buttonList.add(new GuiIconButton(19, "Command Help", width / 2 + 148, (height / 2) - 40 - (xSpacing * 2), 80, 0, 20, 20));
-		buttonList.add(new GuiIconButton(20, "MCM Forums", width / 2 + 148, (height / 2) - 20 - xSpacing, 60, 0, 20, 20));
-		buttonList.add(new GuiIconButton(21, "Staff Guidelines", width / 2 + 148, (height / 2), 40, 0, 20, 20));
-		buttonList.add(new GuiIconButton(22, "Trello", width / 2 + 148, (height / 2) + 20 + (xSpacing * 1), 100, 0, 20, 20));
+		int yAnchor = (customize ? 150 : 139);
+
+		if (customize) buttonList.add(new GuiIconButton(40, "Reset All Settings", width / 2 + 148, yAnchor - 80 - (xSpacing * 4), 160, 0));
+		buttonList.add(new GuiIconButton(32, "Toggle Customization", width / 2 + 148, yAnchor - 60 - (xSpacing * 3), 0, 0));
+		buttonList.add(new GuiIconButton(19, "Command Help", width / 2 + 148, yAnchor - 40 - (xSpacing * 2), 80, 0, 20, 20));
+		buttonList.add(new GuiIconButton(20, "MCM Forums", width / 2 + 148, yAnchor - 20 - xSpacing, 60, 0, 20, 20));
+		buttonList.add(new GuiIconButton(21, "Staff Guidelines", width / 2 + 148, yAnchor, 40, 0, 20, 20));
+		buttonList.add(new GuiIconButton(22, "Trello", width / 2 + 148, yAnchor + 20 + (xSpacing * 1), 100, 0, 20, 20));
 	}
 
 	/**
@@ -178,74 +183,74 @@ public class ModGui extends GuiScreen
 		switch (button.id)
 		{
 			case 0:
-				mod.message().sendMessage(MessageType.BECOME_STAFF, mod.getOptions().getOption(Option.BECOMING_STAFF_AUTO_LINK.key()).asBoolean());
+				MessageSender.sendMessage(MessageType.BECOME_STAFF, mod.getOptions().getOption(Option.BECOMING_STAFF_AUTO_LINK.key()).asBoolean());
 				exitGui();
 				break;
 			case 1:
-				mod.message().sendMessage(MessageType.BECOME_STAFF, true, true);
+				MessageSender.sendMessage(MessageType.BECOME_STAFF, true, true);
 				exitGui();
 				break;
 			case 2:
-				mod.message().sendMessage(MessageType.RULES, mod.getOptions().getOption(Option.RULES_PAGE_AUTO_LINK.key()).asBoolean());
+				MessageSender.sendMessage(MessageType.RULES, mod.getOptions().getOption(Option.RULES_PAGE_AUTO_LINK.key()).asBoolean());
 				exitGui();
 				break;
 			case 3:
-				mod.message().sendMessage(MessageType.RULES, true, true);
+				MessageSender.sendMessage(MessageType.RULES, true, true);
 				exitGui();
 				break;
 			case 4:
-				mod.message().sendMessage(MessageType.REPORTS, mod.getOptions().getOption(Option.REPORT_PAGE_AUTO_LINK.key()).asBoolean());
+				MessageSender.sendMessage(MessageType.REPORTS, mod.getOptions().getOption(Option.REPORT_PAGE_AUTO_LINK.key()).asBoolean());
 				exitGui();
 				break;
 			case 5:
-				mod.message().sendMessage(MessageType.REPORTS, true, true);
+				MessageSender.sendMessage(MessageType.REPORTS, true, true);
 				exitGui();
 				break;
 			case 6:
-				mod.message().sendMessage(MessageType.VOTE, mod.getOptions().getOption(Option.VOTE_PAGE_AUTO_LINK.key()).asBoolean());
+				MessageSender.sendMessage(MessageType.VOTE, mod.getOptions().getOption(Option.VOTE_PAGE_AUTO_LINK.key()).asBoolean());
 				exitGui();
 				break;
 			case 7:
-				mod.message().sendMessage(MessageType.VOTE, true, true);
+				MessageSender.sendMessage(MessageType.VOTE, true, true);
 				exitGui();
 				break;
 			case 8:
-				mod.message().sendMessage(MessageType.DONATE, mod.getOptions().getOption(Option.DONATE_PAGE_AUTO_LINK.key()).asBoolean());
+				MessageSender.sendMessage(MessageType.DONATE, mod.getOptions().getOption(Option.DONATE_PAGE_AUTO_LINK.key()).asBoolean());
 				exitGui();
 				break;
 			case 9:
-				mod.message().sendMessage(MessageType.DONATE, true, true);
+				MessageSender.sendMessage(MessageType.DONATE, true, true);
 				exitGui();
 				break;
 			case 10:
-				mod.message().sendMessage(MessageType.BAN_APPEALS, mod.getOptions().getOption(Option.BAN_APPEAL_PAGE_AUTO_LINK.key()).asBoolean());
+				MessageSender.sendMessage(MessageType.BAN_APPEALS, mod.getOptions().getOption(Option.BAN_APPEAL_PAGE_AUTO_LINK.key()).asBoolean());
 				exitGui();
 				break;
 			case 11:
-				mod.message().sendMessage(MessageType.BAN_APPEALS, true, true);
+				MessageSender.sendMessage(MessageType.BAN_APPEALS, true, true);
 				exitGui();
 				break;
 			case 12:
-				mod.message().sendMessage(MessageType.EXPLAIN_TEAMING, false);
+				MessageSender.sendMessage(MessageType.EXPLAIN_TEAMING, false);
 				exitGui();
 				break;
 			case 13:
-				mod.message().sendMessage(MessageType.EXPLAIN_ARGUE, false);
+				MessageSender.sendMessage(MessageType.EXPLAIN_ARGUE, false);
 				exitGui();
 				break;
 			case 14:
-				mod.message().sendMessage(MessageType.EXPLAIN_RDM, false);
+				MessageSender.sendMessage(MessageType.EXPLAIN_RDM, false);
 				exitGui();
 				break;
 			case 15:
-				mod.message().sendMessage(MessageType.CUSTOM1, false);
+				MessageSender.sendMessage(MessageType.CUSTOM1, false);
 				exitGui();
 				break;
 			case 16:
 				mc.displayGuiScreen(new GuiCustomEditor(this, mod.getOptions(), Option.CUSTOM_ONE_TITLE.key(), Option.CUSTOM_ONE1.key(), Option.CUSTOM_ONE2.key(), Option.CUSTOM_ONE3.key(), true));
 				break;
 			case 17:
-				mod.message().sendMessage(MessageType.CUSTOM2, false);
+				MessageSender.sendMessage(MessageType.CUSTOM2, false);
 				exitGui();
 				break;
 			case 18:
@@ -268,22 +273,22 @@ public class ModGui extends GuiScreen
 				exitGui();
 				break;
 			case 23:
-				mod.message().sendMessage(MessageType.CUSTOM3, false);
+				MessageSender.sendMessage(MessageType.CUSTOM3, false);
 				exitGui();
 				break;
 			case 24:
 				mc.displayGuiScreen(new GuiCustomEditor(this, mod.getOptions(), Option.CUSTOM_THREE_TITLE.key(), Option.CUSTOM_THREE1.key(), Option.CUSTOM_THREE2.key(), Option.CUSTOM_THREE3.key(), true));
 				break;
 			case 25:
-				mod.message().sendMessage(MessageType.FORUM, mod.getOptions().getOption(Option.FORUM_PAGE_AUTO_LINK.key()).asBoolean());
+				MessageSender.sendMessage(MessageType.FORUM, mod.getOptions().getOption(Option.FORUM_PAGE_AUTO_LINK.key()).asBoolean());
 				exitGui();
 				break;
 			case 26:
-				mod.message().sendMessage(MessageType.FORUM, true, true);
+				MessageSender.sendMessage(MessageType.FORUM, true, true);
 				exitGui();
 				break;
 			case 27:
-				mod.message().sendMessage(MessageType.CUSTOM4, false);
+				MessageSender.sendMessage(MessageType.CUSTOM4, false);
 				exitGui();
 				break;
 			case 28:
@@ -324,7 +329,21 @@ public class ModGui extends GuiScreen
 			case 39:
 				mc.displayGuiScreen(new GuiCustomEditor(this, mod.getOptions(), Option.FORUM_PAGE_AUTO_LINK.key(), "Forum Link", Option.FORUM_PAGE1.key(), Option.FORUM_PAGE2.key(), Option.FORUM_PAGE3.key(), false));
 				break;
+			case 40:
+				mc.displayGuiScreen(new GuiYesNo(this, "Are you sure that you want to reset all of your", "customization? (Cannot be undone)", 40));
+				break;
 		}
+	}
+
+	@Override
+	public void confirmClicked(boolean clickedYes, int parentButtonClickedId)
+	{
+		if (clickedYes)
+		{
+			mod.getOptions().defaultResetOptions();
+		}
+
+		mc.displayGuiScreen(new ModGui(mod));
 	}
 
 	@Override
@@ -338,6 +357,7 @@ public class ModGui extends GuiScreen
 	 */
 	public void exitGui()
 	{
+		mod.getOptions().saveOptions();
 		mc.displayGuiScreen((GuiScreen) null);
 	}
 
@@ -345,21 +365,6 @@ public class ModGui extends GuiScreen
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		
-		// Waits for ESC to be released before exiting GUI, prevents opening of the in-game pause menu upon exit of GUI
-		if ((!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) && waitForRelease)
-		{
-			exitGui();
-		}
-		
-		if ((Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) && !justEntered)
-		{
-			waitForRelease = true;
-		}
-		else if (justEntered && !Keyboard.isKeyDown(Keyboard.KEY_GRAVE) && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) // Waits for the GRAVE key to be released before focusing on the TextField or allowing exiting through the GRAVE key being pressed.
-		{
-			justEntered = false;
-		}
 
 		drawCenteredString(fontRendererObj, "Mod Tools", width / 2, spaceFromTop - 16, 16777215);
 
@@ -368,7 +373,7 @@ public class ModGui extends GuiScreen
 			if (button instanceof GuiIconButton)
 			{
 				GuiIconButton giButton = (GuiIconButton) button;
-				
+
 				if (giButton.isMouseOver() && giButton.hasTooltip())
 				{
 					List<String> hnng = new ArrayList<String>();

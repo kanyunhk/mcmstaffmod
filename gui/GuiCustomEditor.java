@@ -11,6 +11,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
 import net.playmcm.qwertysam.io.OptionManager;
+import net.playmcm.qwertysam.util.KeyPress;
 
 /**
  * The options menu for the backup mod.
@@ -44,6 +45,9 @@ public class GuiCustomEditor extends GuiScreen
 
 	protected boolean titleEdit;
 
+	private KeyPress escKey;
+	private KeyPress gravKey;
+
 	/**
 	 * The Gui that displays and allows you to change the options.
 	 * 
@@ -53,7 +57,7 @@ public class GuiCustomEditor extends GuiScreen
 	{
 		this(guiParentScreen, saveManager, null, customTitleKey, customLine1Key, customLine2Key, customLine3Key, titleEdit);
 	}
-	
+
 	/**
 	 * The Gui that displays and allows you to change the options.
 	 * 
@@ -70,6 +74,9 @@ public class GuiCustomEditor extends GuiScreen
 		this.customLine3Key = customLine3Key;
 
 		this.titleEdit = titleEdit;
+
+		escKey = new KeyPress(Keyboard.KEY_ESCAPE, false);
+		gravKey = new KeyPress(Keyboard.KEY_GRAVE, false);
 	}
 
 	public boolean hasLinkToggle()
@@ -109,8 +116,8 @@ public class GuiCustomEditor extends GuiScreen
 				customLine1.setText(saveManager.getOption(customLine1Key).getDefault());
 				customLine2.setText(saveManager.getOption(customLine2Key).getDefault());
 				customLine3.setText(saveManager.getOption(customLine3Key).getDefault());
-				
-				saveManager.getOption(autoLinkKey).setString(saveManager.getOption(autoLinkKey).getDefault());
+
+				if (hasLinkToggle()) saveManager.getOption(autoLinkKey).setString(saveManager.getOption(autoLinkKey).getDefault());
 				saveSettings();
 				mc.displayGuiScreen(new GuiCustomEditor(parentScreen, saveManager, autoLinkKey, customTitleKey, customLine1Key, customLine2Key, customLine3Key, titleEdit));
 				break;
@@ -157,7 +164,7 @@ public class GuiCustomEditor extends GuiScreen
 		{
 			buttonList.add(new GuiIconButton(27, "Auto-Send Link", width / 2 + 108, 50, (saveManager.getOption(autoLinkKey).asBoolean() ? 120 : 140), 0));
 		}
-		
+
 		customLine1 = new GuiTextField(1, fontRendererObj, width / 2 - 200, 90, 400, 20);
 		customLine1.setMaxStringLength(100);
 		customLine1.setText(saveManager.getOption(customLine1Key).value());
@@ -263,6 +270,13 @@ public class GuiCustomEditor extends GuiScreen
 
 	/** Tells Minecraft it's ready to exit the gui as soon as the player lets go of ESC. */
 	private boolean waitForRelease = false;
+	private boolean lastWaitForRelease = false;
+
+	public void exitGui()
+	{
+		saveSettings();
+		mc.displayGuiScreen(parentScreen);
+	}
 
 	/**
 	 * Draws the screen and all the components in it.
@@ -272,7 +286,7 @@ public class GuiCustomEditor extends GuiScreen
 	{
 		drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		
+
 		drawCenteredString(fontRendererObj, "Custom Preset Editor", width / 2, 18, 16777215);
 
 		if (titleEdit)
@@ -296,17 +310,18 @@ public class GuiCustomEditor extends GuiScreen
 		customLine2.drawTextBox();
 		customLine3.drawTextBox();
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+		// Doesn't let you hold grave while
+		if (escKey.isTriggered() || (gravKey.isTriggered() && (titleEdit ? !customTitle.isFocused() : true) && !customLine1.isFocused() && !customLine2.isFocused() && !customLine3.isFocused()))
 		{
-			mc.displayGuiScreen(parentScreen);
+			exitGui();
 		}
-		
+
 		for (Object button : this.buttonList)
 		{
 			if (button instanceof GuiIconButton)
 			{
 				GuiIconButton giButton = (GuiIconButton) button;
-				
+
 				if (giButton.isMouseOver() && giButton.hasTooltip())
 				{
 					List<String> hnng = new ArrayList<String>();

@@ -19,7 +19,7 @@ public class OptionManager
 	private List<Option> options;
 
 	/** The symbol that separates the saved option from the options key. **/
-	private static final String splitSymbol = "<:<>:";
+	private static final String splitSymbol = ":";
 
 	public OptionManager(String fileName)
 	{
@@ -76,6 +76,14 @@ public class OptionManager
 		return null;
 	}
 
+	public void defaultResetOptions()
+	{
+		for (Option option : options)
+		{
+			option.setString(option.getDefault());
+		}
+	}
+
 	/**
 	 * Saves all the current options.
 	 */
@@ -130,6 +138,11 @@ public class OptionManager
 					if (splitOptionsLine.length > 1) // If there is something on the line
 					{
 						String value = splitOptionsLine[1];
+						
+						for (int i = 2; i < splitOptionsLine.length; i++)
+						{
+							value = value + splitSymbol + splitOptionsLine[i];
+						}
 
 						if (value != null) // if there is a value
 						{

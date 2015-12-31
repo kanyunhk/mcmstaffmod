@@ -11,17 +11,47 @@ public class KeyPress
 	 */
 	private boolean filterSpam;
 	private boolean justEntered;
-	
+	private boolean pressTrigger;
+
 	/**
 	 * Filters the detection of a key being pressed.
 	 * 
 	 * @param keyID the number ID of the key
 	 */
-	public KeyPress(int keyID)
+	public KeyPress(int keyID, boolean onPressTrigger)
 	{
 		this.keyID = keyID;
 		filterSpam = false;
 		justEntered = true;
+		pressTrigger = onPressTrigger;
+	}
+
+	private boolean previouslyDown = false;
+
+	/**
+	 * @return if the key has been released.
+	 */
+	public boolean onRelease()
+	{
+		boolean isKeyDown = isKeyDown();
+
+		if (previouslyDown && !isKeyDown && !justEntered)
+		{
+			previouslyDown = isKeyDown;
+			return true;
+		}
+		else if (!isKeyDown)
+		{
+			justEntered = false;
+		}
+		previouslyDown = isKeyDown;
+
+		return false;
+	}
+
+	private boolean isKeyDown()
+	{
+		return Keyboard.isKeyDown(keyID);
 	}
 
 	/**
@@ -29,7 +59,7 @@ public class KeyPress
 	 */
 	public boolean isPressed()
 	{
-		boolean isKeyDown = Keyboard.isKeyDown(keyID);
+		boolean isKeyDown = isKeyDown();
 
 		if (isKeyDown && !filterSpam && !justEntered)
 		{
@@ -42,5 +72,10 @@ public class KeyPress
 			filterSpam = false;
 		}
 		return false;
+	}
+
+	public boolean isTriggered()
+	{
+		return (pressTrigger ? isPressed() : onRelease());
 	}
 }
