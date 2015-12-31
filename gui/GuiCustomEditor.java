@@ -1,8 +1,6 @@
 package net.playmcm.qwertysam.gui;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 
@@ -18,7 +16,7 @@ import net.playmcm.qwertysam.util.KeyPress;
  * 
  * @author Samson
  */
-public class GuiCustomEditor extends GuiScreen
+public class GuiCustomEditor extends GuiFloatingTextAPI
 {
 	/** The parent gui screen. **/
 	protected final GuiScreen parentScreen;
@@ -267,11 +265,7 @@ public class GuiCustomEditor extends GuiScreen
 		customLine2.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
 		customLine3.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
 	}
-
-	/** Tells Minecraft it's ready to exit the gui as soon as the player lets go of ESC. */
-	private boolean waitForRelease = false;
-	private boolean lastWaitForRelease = false;
-
+	
 	public void exitGui()
 	{
 		saveSettings();
@@ -316,19 +310,6 @@ public class GuiCustomEditor extends GuiScreen
 			exitGui();
 		}
 
-		for (Object button : this.buttonList)
-		{
-			if (button instanceof GuiIconButton)
-			{
-				GuiIconButton giButton = (GuiIconButton) button;
-
-				if (giButton.isMouseOver() && giButton.hasTooltip())
-				{
-					List<String> hnng = new ArrayList<String>();
-					hnng.add(giButton.tooltip());
-					drawHoveringText(hnng, mouseX, mouseY);
-				}
-			}
-		}
+		drawFloatingText(mouseX, mouseY);
 	}
 }

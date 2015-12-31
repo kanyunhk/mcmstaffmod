@@ -1,8 +1,6 @@
 package net.playmcm.qwertysam.gui;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -14,7 +12,7 @@ import net.playmcm.qwertysam.messages.api.MessageType;
 import net.playmcm.qwertysam.messages.api.URL;
 import net.playmcm.qwertysam.util.UrlOpener;
 
-public class ModGui extends GuiScreen
+public class ModGui extends GuiFloatingTextAPI
 {
 	/** The pixels between the GUI and the top of the screen **/
 	private static final int spaceFromTop = 36;
@@ -31,12 +29,6 @@ public class ModGui extends GuiScreen
 	/** The width of the buttons **/
 	public static final int linkButtonWidth = smallButtonWidth - 20 - xSpacing;
 
-	/** Tells whether the player just entered the GUI or not. */
-	private boolean justEntered;
-
-	/** Tells Minecraft it's ready to exit the gui as soon as the player lets go of ESC. */
-	private boolean waitForRelease;
-
 	private ModMain mod;
 
 	public ModGui(ModMain mod)
@@ -48,9 +40,6 @@ public class ModGui extends GuiScreen
 	@Override
 	public void initGui()
 	{
-		justEntered = true;
-		waitForRelease = false;
-
 		buttonList.clear();
 
 		// buttonList.add(new GuiIconButton(47, width / 2 + smallButtonWidth + (xSpacing * 2), spaceFromTop + 20, 20, 0, 20, 20));
@@ -368,19 +357,6 @@ public class ModGui extends GuiScreen
 
 		drawCenteredString(fontRendererObj, "Mod Tools", width / 2, spaceFromTop - 16, 16777215);
 
-		for (Object button : this.buttonList)
-		{
-			if (button instanceof GuiIconButton)
-			{
-				GuiIconButton giButton = (GuiIconButton) button;
-
-				if (giButton.isMouseOver() && giButton.hasTooltip())
-				{
-					List<String> hnng = new ArrayList<String>();
-					hnng.add(giButton.tooltip());
-					drawHoveringText(hnng, mouseX, mouseY);
-				}
-			}
-		}
+		drawFloatingText(mouseX, mouseY);
 	}
 }
