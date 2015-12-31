@@ -21,7 +21,7 @@ public class ModMain
 	private OptionManager options;
 	private MessageSender messageSender;
 
-	public static final boolean debug = true;
+	public static final boolean debug = false;
 
 	public ModMain()
 	{
