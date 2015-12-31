@@ -27,6 +27,7 @@ public class GuiIconButton extends GuiButton
 	private int yTextureSize;
 	/** Tells if the button is currently enabled. **/
 	private boolean isEnabled;
+	private String tooltip;
 
 	/**
 	 * Creates a new button with an image on it.
@@ -50,17 +51,48 @@ public class GuiIconButton extends GuiButton
 	 * @param yPosition = The vertical position to draw the button at.
 	 * @param xTextureOffset = The horizontal position of the button in the image file.
 	 * @param yTextureOffset = The vertical position of the button in the image file.
+	 */
+	public GuiIconButton(int buttonID, String tooltip, int xPosition, int yPosition, int xTextureOffset, int yTextureOffset)
+	{
+		this(buttonID, tooltip, xPosition, yPosition, xTextureOffset, yTextureOffset, 20, 20);
+	}
+
+	/**
+	 * Creates a new button with an image on it.
+	 * 
+	 * @param buttonID = The ID of the button.
+	 * @param xPosition = The horizontal position to draw the button at.
+	 * @param yPosition = The vertical position to draw the button at.
+	 * @param xTextureOffset = The horizontal position of the button in the image file.
+	 * @param yTextureOffset = The vertical position of the button in the image file.
 	 * @param xTextureSize = The height of the button.
 	 * @param yTextureSize = The width of the button.
 	 */
 	public GuiIconButton(int buttonID, int xPosition, int yPosition, int xTextureOffset, int yTextureOffset, int xTextureSize, int yTextureSize)
+	{
+		this(buttonID, null, xPosition, yPosition, xTextureOffset, yTextureOffset, xTextureSize, yTextureSize);
+	}
+
+	/**
+	 * Creates a new button with an image on it.
+	 * 
+	 * @param buttonID = The ID of the button.
+	 * @param xPosition = The horizontal position to draw the button at.
+	 * @param yPosition = The vertical position to draw the button at.
+	 * @param xTextureOffset = The horizontal position of the button in the image file.
+	 * @param yTextureOffset = The vertical position of the button in the image file.
+	 * @param xTextureSize = The height of the button.
+	 * @param yTextureSize = The width of the button.
+	 */
+	public GuiIconButton(int buttonID, String tooltip, int xPosition, int yPosition, int xTextureOffset, int yTextureOffset, int xTextureSize, int yTextureSize)
 	{
 		super(buttonID, xPosition, yPosition, xTextureSize, yTextureSize, "");
 		this.xTextureOffset = xTextureOffset;
 		this.yTextureOffset = yTextureOffset;
 		this.xTextureSize = xTextureSize;
 		this.yTextureSize = yTextureSize;
-		this.isEnabled = true;
+		isEnabled = true;
+		this.tooltip = tooltip;
 	}
 
 	/**
@@ -69,40 +101,49 @@ public class GuiIconButton extends GuiButton
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY)
 	{
-		if (this.visible)
+		if (visible)
 		{
 			// Draws the Regular or texture pack'd minecraft button behind the decal.
 			FontRenderer var4 = mc.fontRendererObj;
 			mc.getTextureManager().bindTexture(buttonTextures);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-			int var5 = this.getHoverState(this.hovered);
+			hovered = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
+			int var5 = getHoverState(hovered);
 			GlStateManager.enableBlend();
 			GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 			GlStateManager.blendFunc(770, 771);
-			this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + var5 * 20, this.width / 2, this.height);
-			this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + var5 * 20, this.width / 2, this.height);
-			this.mouseDragged(mc, mouseX, mouseY);
+			drawTexturedModalRect(xPosition, yPosition, 0, 46 + var5 * 20, width / 2, height);
+			drawTexturedModalRect(xPosition + width / 2, yPosition, 200 - width / 2, 46 + var5 * 20, width / 2, height);
+			mouseDragged(mc, mouseX, mouseY);
 
-			mc.getTextureManager().bindTexture(this.textureDir);
+			mc.getTextureManager().bindTexture(textureDir);
 			// GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			boolean isMouseOverButton = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.yTextureSize;
 
-			int tempYTextureOffset = this.yTextureOffset; // Used to bump the texture being drawn down in the image file to display it being hovered over or disabled.
+			int tempYTextureOffset = yTextureOffset; // Used to bump the texture being drawn down in the image file to display it being hovered over or disabled.
 
-			if (!this.isEnabled)
+			if (!isEnabled)
 			{
-				tempYTextureOffset = this.yTextureOffset + (this.yTextureSize * 2);
+				tempYTextureOffset = yTextureOffset + (yTextureSize * 2);
 			}
-			else if (isMouseOverButton)
+			else if (isMouseOver())
 			{
-				tempYTextureOffset = this.yTextureOffset + this.yTextureSize;
+				tempYTextureOffset = yTextureOffset + yTextureSize;
 			}
 
-			this.drawTexturedModalRect(this.xPosition, this.yPosition, this.xTextureOffset, tempYTextureOffset, this.width, this.height);
+			drawTexturedModalRect(xPosition, yPosition, xTextureOffset, tempYTextureOffset, width, height);
 		}
 	}
 
+	public boolean hasTooltip()
+	{
+		return tooltip != null;
+	}
+	
+	public String tooltip()
+	{
+		return tooltip;
+	}
+	
 	/**
 	 * Sets if the button is enabled.
 	 * 
@@ -110,8 +151,8 @@ public class GuiIconButton extends GuiButton
 	 */
 	public void setIsEnabled(boolean newValue)
 	{
-		this.enabled = newValue;
-		this.isEnabled = newValue;
+		enabled = newValue;
+		isEnabled = newValue;
 	}
 
 	/**
@@ -119,6 +160,6 @@ public class GuiIconButton extends GuiButton
 	 */
 	public boolean getIsEnabled()
 	{
-		return this.isEnabled;
+		return isEnabled;
 	}
 }

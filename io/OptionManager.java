@@ -56,7 +56,7 @@ public class OptionManager
 		}
 		else
 		{
-			QLogger.log(LogType.OPTIONS_ERROR, "Could not remove any option with the key '" + key + "'.");
+			QLogger.log(LogType.OPTIONS_ERROR, "Could not remove any option with the key '" + key + "'");
 		}
 	}
 
@@ -72,7 +72,7 @@ public class OptionManager
 		{
 			if (option.key().equals(key)) return option;
 		}
-		QLogger.log(LogType.OPTIONS_ERROR, "No option exists with the key '" + key + "'.");
+		QLogger.log(LogType.OPTIONS_ERROR, "No option exists with the key '" + key + "'");
 		return null;
 	}
 
@@ -92,7 +92,7 @@ public class OptionManager
 				// Writes all the options to new lines
 				for (Option option : options)
 				{
-					printer.println(option.key() + splitSymbol + option.asString());
+					printer.println(option.key() + splitSymbol + option.value());
 				}
 
 				printer.close();
@@ -123,32 +123,35 @@ public class OptionManager
 				{
 					String[] splitOptionsLine = loadedOptionLine.split(splitSymbol);
 
+					String optionKey = "null";
+
+					if (splitOptionsLine.length > 0) optionKey = splitOptionsLine[0];
+
 					if (splitOptionsLine.length > 1) // If there is something on the line
 					{
-						String optionKey = splitOptionsLine[0];
 						String value = splitOptionsLine[1];
 
 						if (value != null) // if there is a value
 						{
 							Option option = getOption(optionKey);
 
-							if (option != null) // If the corrosponding option exists
+							if (option != null) // If the corresponding option exists
 							{
 								option.setString(value);
 							}
 							else
 							{
-								QLogger.log(LogType.OPTIONS_ERROR, "No corrosponding option has been registered for '" + optionKey + "'.");
+								QLogger.log(LogType.OPTIONS_ERROR, "No corrosponding option has been registered for '" + optionKey + "'");
 							}
 						}
 						else
 						{
-							QLogger.log(LogType.OPTIONS_ERROR, "No value found on the provided line '" + optionKey + "'.");
+							QLogger.log(LogType.OPTIONS_ERROR, "Null value found on the provided line '" + optionKey + "'");
 						}
 					}
 					else
 					{
-						QLogger.log(LogType.OPTIONS_ERROR, "No option on the provided line.");
+						QLogger.log(LogType.OPTIONS_ERROR, "No value on the provided line. '" + optionKey + "'");
 					}
 				}
 				reader.close();

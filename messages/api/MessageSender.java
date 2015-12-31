@@ -3,10 +3,9 @@ package net.playmcm.qwertysam.messages.api;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.playmcm.qwertysam.io.OptionManager;
+import net.playmcm.qwertysam.io.Option;
 import net.playmcm.qwertysam.log.LogType;
 import net.playmcm.qwertysam.log.QLogger;
-import net.playmcm.qwertysam.messages.MessageManager;
 
 public class MessageSender
 {
@@ -17,28 +16,25 @@ public class MessageSender
 	/** The delay in milliseconds for sending delayed messages. */
 	public static final int delay = 200;
 
-	private MessageManager messageManager;
+	public MessageSender() {}
 
-	public MessageSender(OptionManager options)
+	public void sendMessage(MessageType type, boolean autoLink)
 	{
-		this.messageManager = new MessageManager(options);
+		sendMessage(type, false, autoLink);
 	}
 
-	public void sendMessage(MessageType type)
-	{
-		sendMessage(type, false);
-	}
-
-	public void sendMessage(MessageType type, boolean justLink)
+	public void sendMessage(MessageType type, boolean justLink, boolean autoLink)
 	{
 		if (!justLink)
 		{
-			List<String> messageStrings = messageManager.getRandomMessage(type);
-
-			if (messageStrings != null)
+			if (Option.getValues(type) != null)
 			{
+				List<String> messages = Option.getValues(type);
+				
+				if (autoLink) messages.add(type.getURL());
+				
 				int i = 0;
-				for (String string : messageManager.getRandomMessage(type))
+				for (String string : messages)
 				{
 					boolean sendMessage = false;
 					if (string != "" && string != null)
@@ -54,9 +50,9 @@ public class MessageSender
 				}
 			}
 		}
-		else if (messageManager.getURL(type) != null)
+		else if (type.getURL() != null)
 		{
-			sendDelayedMessage(messageManager.getURL(type), 0);
+			sendMessage(type.getURL());
 		}
 	}
 

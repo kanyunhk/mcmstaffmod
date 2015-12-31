@@ -6,7 +6,7 @@ public interface IMessage
 {
 	public MessageType type();
 
-	public List<List<String>> messages();
+	public List<String> messages();
 
 	public String url();
 }

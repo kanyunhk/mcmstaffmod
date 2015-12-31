@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.playmcm.qwertysam.gui.ModGui;
 import net.playmcm.qwertysam.io.Option;
-import net.playmcm.qwertysam.io.OptionKey;
 import net.playmcm.qwertysam.io.OptionManager;
 import net.playmcm.qwertysam.messages.api.MessageSender;
 import net.playmcm.qwertysam.util.KeyPress;
@@ -22,30 +21,21 @@ public class ModMain
 	private OptionManager options;
 	private MessageSender messageSender;
 
+	public static final boolean debug = true;
+	
 	public ModMain()
 	{
 		triggerKey = new KeyPress(Keyboard.KEY_GRAVE);
 
 		options = new OptionManager("mcm_options.txt");
-		options.registerOption(new Option(OptionKey.customOneTitle, "Custom 1"));
-		options.registerOption(new Option(OptionKey.customOne1, ""));
-		options.registerOption(new Option(OptionKey.customOne2, ""));
-		options.registerOption(new Option(OptionKey.customOne3, ""));
-		options.registerOption(new Option(OptionKey.customTwoTitle, "Custom 2"));
-		options.registerOption(new Option(OptionKey.customTwo1, ""));
-		options.registerOption(new Option(OptionKey.customTwo2, ""));
-		options.registerOption(new Option(OptionKey.customTwo3, ""));
-		options.registerOption(new Option(OptionKey.customThreeTitle, "Custom 3"));
-		options.registerOption(new Option(OptionKey.customThree1, ""));
-		options.registerOption(new Option(OptionKey.customThree2, ""));
-		options.registerOption(new Option(OptionKey.customThree3, ""));
-		options.registerOption(new Option(OptionKey.customFourTitle, "Custom 4"));
-		options.registerOption(new Option(OptionKey.customFour1, ""));
-		options.registerOption(new Option(OptionKey.customFour2, ""));
-		options.registerOption(new Option(OptionKey.customFour3, ""));
+		
+		for (Option option : Option.values())
+		{
+			options.registerOption(option);
+		}
 		options.loadOptions();
 
-		messageSender = new MessageSender(this.options);
+		messageSender = new MessageSender();
 	}
 
 	/**

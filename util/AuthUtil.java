@@ -15,6 +15,8 @@ public class AuthUtil
 			"485759fc52e34d31a3202a54cc709c82", // Alena
 			"bd550bb734524f579df1abb4bb12f076", // Tyler
 			"b9f0500fc3c944dbbdb6f44f6b38bcfe", // Emelee
+			"", // Etian
+			"", // Faithhh
 	};
 
 	private static boolean hasInit = false;
