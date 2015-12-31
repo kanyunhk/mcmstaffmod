@@ -153,7 +153,7 @@ public class ModGui extends GuiFloatingTextAPI
 
 		int yAnchor = (customize ? 150 : 139);
 
-		if (customize) buttonList.add(new GuiIconButton(40, "Reset All Settings", width / 2 + 148, yAnchor - 80 - (xSpacing * 4), 160, 0));
+		if (customize) buttonList.add(new GuiIconButton(40, "Reset All Settings", width / 2 + 148, yAnchor - 80 - (xSpacing * 4), 140, 0));
 		buttonList.add(new GuiIconButton(32, "Toggle Customization", width / 2 + 148, yAnchor - 60 - (xSpacing * 3), 0, 0));
 		buttonList.add(new GuiIconButton(19, "Command Help", width / 2 + 148, yAnchor - 40 - (xSpacing * 2), 80, 0, 20, 20));
 		buttonList.add(new GuiIconButton(20, "MCM Forums", width / 2 + 148, yAnchor - 20 - xSpacing, 60, 0, 20, 20));
