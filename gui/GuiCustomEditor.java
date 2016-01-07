@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
+import net.playmcm.qwertysam.ModMain;
 import net.playmcm.qwertysam.io.OptionManager;
 import net.playmcm.qwertysam.util.KeyPress;
 
@@ -74,7 +75,7 @@ public class GuiCustomEditor extends GuiFloatingTextAPI
 		this.titleEdit = titleEdit;
 
 		escKey = new KeyPress(Keyboard.KEY_ESCAPE, false);
-		gravKey = new KeyPress(Keyboard.KEY_GRAVE, false);
+		gravKey = new KeyPress(ModMain.KEYBOARD_SHORTCUT, false);
 	}
 
 	public boolean hasLinkToggle()

@@ -8,6 +8,7 @@ import net.playmcm.qwertysam.gui.ModGui;
 import net.playmcm.qwertysam.io.Option;
 import net.playmcm.qwertysam.io.OptionManager;
 import net.playmcm.qwertysam.messages.api.MessageSender;
+import net.playmcm.qwertysam.util.AuthUtil;
 import net.playmcm.qwertysam.util.KeyPress;
 
 /**
@@ -17,6 +18,7 @@ import net.playmcm.qwertysam.util.KeyPress;
  */
 public class ModMain
 {
+	public static final int KEYBOARD_SHORTCUT = AuthUtil.getUser().isEtian() ? Keyboard.KEY_G : Keyboard.KEY_GRAVE;
 	private KeyPress triggerKey;
 	private OptionManager options;
 	private MessageSender messageSender;
@@ -25,7 +27,9 @@ public class ModMain
 
 	public ModMain()
 	{
-		triggerKey = new KeyPress(Keyboard.KEY_GRAVE, true);
+		
+		
+		triggerKey = new KeyPress(KEYBOARD_SHORTCUT, true);
 
 		options = new OptionManager("mcm_options.txt");
 
