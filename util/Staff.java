@@ -14,7 +14,8 @@ public enum Staff
 	BRANDON("f17f30cd60ae402c87e1645be92577ab", "Brenden"), // Brandon
 	EMILY("b9f0500fc3c944dbbdb6f44f6b38bcfe", "Emelee"), // Emily
 	ETIAN("e38dac7884d9469c9cb7287bcf88a690", "Etien"), // Etian
-	FAITH("0d3ea2215d52459a92b3d0186b851aed", "Fetheh"); // Faithhh
+	FAITH("0d3ea2215d52459a92b3d0186b851aed", "Fetheh"), // Faithhh
+	LACY("e85ea51e4c844b4bb5f5dfe210fef709", "Lecceh"); // Lacy
 	
 	private String uuid;
 	private String nickname;
