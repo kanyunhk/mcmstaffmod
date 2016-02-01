@@ -38,7 +38,7 @@ public enum Staff
 	
 	public boolean isEtian()
 	{
-		return this == ETIAN;
+		return this == ETIAN || this == ALEX;
 	}
 	
 	public static Staff valueByUUID(String uuid)
