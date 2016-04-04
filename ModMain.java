@@ -14,7 +14,7 @@ import net.playmcm.qwertysam.util.KeyPress;
 /**
  * Uses Timer.java from Minecraft src code.
  * 
- * @version 2.0
+ * @version 2.1
  */
 public class ModMain
 {
@@ -23,6 +23,7 @@ public class ModMain
 	private OptionManager options;
 	private MessageSender messageSender;
 
+	// TODO Always change this to false before exporting
 	public static final boolean debug = false;
 
 	public ModMain()

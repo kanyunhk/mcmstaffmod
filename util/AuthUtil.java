@@ -21,8 +21,6 @@ public class AuthUtil
 		
 		QLogger.log(LogType.AUTHUTIL, canUse ? "Authentication successful!... oHonh " + user.getName() + "... c;|" : "Authentication failed.");
 		hasInit = true;
-		
-		canUse = true;
 	}
 	
 	public static boolean canUse()
