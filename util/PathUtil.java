@@ -1,4 +1,4 @@
-package net.playmcm.qwertysam.util;
+package qwertysam.util;
 
 import net.minecraft.client.Minecraft;
 

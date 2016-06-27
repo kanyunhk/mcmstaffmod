@@ -1,4 +1,4 @@
-package net.playmcm.qwertysam.io;
+package qwertysam.io;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,9 +9,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.playmcm.qwertysam.log.LogType;
-import net.playmcm.qwertysam.log.QLogger;
-import net.playmcm.qwertysam.util.PathUtil;
+import qwertysam.log.LogType;
+import qwertysam.log.QLogger;
+import qwertysam.util.PathUtil;
 
 public class OptionManager
 {

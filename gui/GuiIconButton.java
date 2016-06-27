@@ -1,4 +1,4 @@
-package net.playmcm.qwertysam.gui;
+package qwertysam.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -104,21 +104,21 @@ public class GuiIconButton extends GuiButton
 		if (visible)
 		{
 			// Draws the Regular or texture pack'd minecraft button behind the decal.
-			FontRenderer var4 = mc.fontRendererObj;
-			mc.getTextureManager().bindTexture(buttonTextures);
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			hovered = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
-			int var5 = getHoverState(hovered);
-			GlStateManager.enableBlend();
-			GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-			GlStateManager.blendFunc(770, 771);
-			drawTexturedModalRect(xPosition, yPosition, 0, 46 + var5 * 20, width / 2, height);
-			drawTexturedModalRect(xPosition + width / 2, yPosition, 200 - width / 2, 46 + var5 * 20, width / 2, height);
-			mouseDragged(mc, mouseX, mouseY);
+			FontRenderer fontrenderer = mc.fontRendererObj;
+            mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+            int i = this.getHoverState(this.hovered);
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + i * 20, this.width / 2, this.height);
+            this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
+            this.mouseDragged(mc, mouseX, mouseY);
 
-			mc.getTextureManager().bindTexture(textureDir);
-			// GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-
+            mc.getTextureManager().bindTexture(textureDir);
+            // GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            
 			int tempYTextureOffset = yTextureOffset; // Used to bump the texture being drawn down in the image file to display it being hovered over or disabled.
 
 			if (!isEnabled)

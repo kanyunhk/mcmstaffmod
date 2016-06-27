@@ -1,4 +1,4 @@
-package net.playmcm.qwertysam.gui;
+package qwertysam.gui;
 
 import java.util.ArrayList;
 import java.util.List;

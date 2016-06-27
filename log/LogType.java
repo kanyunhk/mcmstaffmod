@@ -1,4 +1,4 @@
-package net.playmcm.qwertysam.log;
+package qwertysam.log;
 
 import org.apache.logging.log4j.Level;
 

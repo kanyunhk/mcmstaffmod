@@ -1,16 +1,16 @@
-package net.playmcm.qwertysam.gui;
+package qwertysam.gui;
 
 import java.io.IOException;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNo;
-import net.playmcm.qwertysam.ModMain;
-import net.playmcm.qwertysam.io.Option;
-import net.playmcm.qwertysam.messages.api.MessageSender;
-import net.playmcm.qwertysam.messages.api.MessageType;
-import net.playmcm.qwertysam.messages.api.URL;
-import net.playmcm.qwertysam.util.UrlOpener;
+import qwertysam.ModMain;
+import qwertysam.io.Option;
+import qwertysam.messages.api.MessageSender;
+import qwertysam.messages.api.MessageType;
+import qwertysam.messages.api.URL;
+import qwertysam.util.UrlOpener;
 
 public class ModGui extends GuiFloatingTextAPI
 {

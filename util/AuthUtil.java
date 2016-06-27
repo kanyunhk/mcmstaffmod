@@ -1,8 +1,8 @@
-package net.playmcm.qwertysam.util;
+package qwertysam.util;
 
 import net.minecraft.client.Minecraft;
-import net.playmcm.qwertysam.log.LogType;
-import net.playmcm.qwertysam.log.QLogger;
+import qwertysam.log.LogType;
+import qwertysam.log.QLogger;
 
 public class AuthUtil
 {
@@ -19,7 +19,7 @@ public class AuthUtil
 		user = Staff.valueByUUID(uuid);
 		canUse = Staff.isValid(user);
 		
-		QLogger.log(LogType.AUTHUTIL, canUse ? "Authentication successful!... oHonh " + user.getName() + "... c;|" : "Authentication failed.");
+		QLogger.log(LogType.AUTHUTIL, canUse ? "Authentication successful!... oHonh, " + user.getName() + "... c;|" : "Authentication failed.");
 		hasInit = true;
 	}
 	

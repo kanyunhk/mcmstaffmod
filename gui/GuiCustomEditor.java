@@ -1,4 +1,4 @@
-package net.playmcm.qwertysam.gui;
+package qwertysam.gui;
 
 import java.io.IOException;
 
@@ -8,9 +8,9 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
-import net.playmcm.qwertysam.ModMain;
-import net.playmcm.qwertysam.io.OptionManager;
-import net.playmcm.qwertysam.util.KeyPress;
+import qwertysam.ModMain;
+import qwertysam.io.OptionManager;
+import qwertysam.util.KeyPress;
 
 /**
  * The options menu for the backup mod.

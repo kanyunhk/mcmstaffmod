@@ -1,4 +1,4 @@
-package net.playmcm.qwertysam.util;
+package qwertysam.util;
 
 import org.lwjgl.input.Keyboard;
 

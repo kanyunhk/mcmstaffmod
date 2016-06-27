@@ -1,4 +1,4 @@
-package net.playmcm.qwertysam.messages.api;
+package qwertysam.messages.api;
 
 public class URL
 {

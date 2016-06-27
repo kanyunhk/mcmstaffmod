@@ -1,11 +1,11 @@
-package net.playmcm.qwertysam.messages.api;
+package qwertysam.messages.api;
 
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.playmcm.qwertysam.io.Option;
-import net.playmcm.qwertysam.log.LogType;
-import net.playmcm.qwertysam.log.QLogger;
+import qwertysam.io.Option;
+import qwertysam.log.LogType;
+import qwertysam.log.QLogger;
 
 public class MessageSender
 {

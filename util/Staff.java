@@ -1,4 +1,4 @@
-package net.playmcm.qwertysam.util;
+package qwertysam.util;
 
 public enum Staff
 {
@@ -15,7 +15,12 @@ public enum Staff
 	EMILY("b9f0500fc3c944dbbdb6f44f6b38bcfe", "Emelee"), // Emily
 	ETIAN("e38dac7884d9469c9cb7287bcf88a690", "Etien"), // Etian
 	FAITH("0d3ea2215d52459a92b3d0186b851aed", "Fethheh"), // Faithhh
-	LACY("e85ea51e4c844b4bb5f5dfe210fef709", "Lecceh"); // Lacy
+	LACY("e85ea51e4c844b4bb5f5dfe210fef709", "Lecceh"), // Lacy
+	KYMMA("4372ba0a8c50441eaf43a6cedb2df7d4", "Kemmu"), // Kymma
+	OBLIVATE("fd172f24378341428bfe53ea4d92ef12", "Ubbli-vape"), // Oblivate
+	CREEP("746be03d059c47108e78676e2d1e5483", "Creepy Man"), // CreepUsOut
+	JENNA("98090da156f94c93a64f939dd4fab92f", "nice slacks"), // Jenna
+	LITTLE("1fc52aac1acc4655ba592bc52ac49d2d", "smallwoman"); // littlemancrush
 	
 	private String uuid;
 	private String nickname;

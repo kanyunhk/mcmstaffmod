@@ -1,15 +1,15 @@
-package net.playmcm.qwertysam;
+package qwertysam;
 
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.playmcm.qwertysam.gui.ModGui;
-import net.playmcm.qwertysam.io.Option;
-import net.playmcm.qwertysam.io.OptionManager;
-import net.playmcm.qwertysam.messages.api.MessageSender;
-import net.playmcm.qwertysam.util.AuthUtil;
-import net.playmcm.qwertysam.util.KeyPress;
+import qwertysam.gui.ModGui;
+import qwertysam.io.Option;
+import qwertysam.io.OptionManager;
+import qwertysam.messages.api.MessageSender;
+import qwertysam.util.AuthUtil;
+import qwertysam.util.KeyPress;
 
 /**
  * Uses Timer.java from Minecraft src code.

@@ -1,10 +1,10 @@
-package net.playmcm.qwertysam.io;
+package qwertysam.io;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.playmcm.qwertysam.messages.api.MessageType;
-import net.playmcm.qwertysam.messages.api.URL;
+import qwertysam.messages.api.MessageType;
+import qwertysam.messages.api.URL;
 
 public enum Option
 {
