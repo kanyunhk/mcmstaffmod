@@ -4,7 +4,7 @@ public enum Staff
 {
 	INVALID("", ""),
 	SAM("55058335a49a44ef920cfb0864225bcf", "Sampai"), // Sam
-	LAUREN("fa9b5735afc0432785f38e6f58277520", "Seppu"), // Lauren
+	LAUREN("8efd6e89c6cb462286d38ef2dc08f69e", "Seppu"), // Lauren (old one fa9b5735afc0432785f38e6f58277520)
 	ERE("797f44ea30664868adb9a64272927f24", "Ere"), // Ere
 	BEN("95a8d801900d45ec812b0c4c099e96cc", "Benneh bOI"), // Ben
 	LINU("4bebde164e7c49a0b00f732bd56f840f", "Linu"), // Linus
