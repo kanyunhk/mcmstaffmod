@@ -93,7 +93,7 @@ public class MessageSender
 				try
 				{
 					Thread.sleep(delay * delayMultiplier);
-					Minecraft.getMinecraft().thePlayer.sendChatMessage(message);
+					Minecraft.getMinecraft().player.sendChatMessage(message);
 				}
 				catch (InterruptedException e)
 				{
