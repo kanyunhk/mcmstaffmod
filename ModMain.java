@@ -14,7 +14,7 @@ import qwertysam.util.KeyPress;
 /**
  * Uses Timer.java from Minecraft src code.
  * 
- * @version 2.1
+ * @version 2.3
  */
 public class ModMain
 {
