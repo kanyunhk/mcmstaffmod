@@ -20,7 +20,9 @@ public enum Staff
 	OBLIVATE("fd172f24378341428bfe53ea4d92ef12", "Sandwich"), // Oblivate
 	CREEP("746be03d059c47108e78676e2d1e5483", "Creepy Man"), // CreepUsOut
 	JENNA("98090da156f94c93a64f939dd4fab92f", "Slacks"), // Jenna
-	LITTLE("1fc52aac1acc4655ba592bc52ac49d2d", "smallwoman"); // littlemancrush
+	LITTLE("1fc52aac1acc4655ba592bc52ac49d2d", "smallwoman"), // littlemancrush
+	KAN("bd4f27d249464d34b743a1765030a3e4", "Kannu"), // Kannn
+	INVEN("aee12c579ec54974bd1d1c77b359d1ab", "Venny"); // InVentrax
 	
 	private String uuid;
 	private String nickname;

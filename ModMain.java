@@ -28,8 +28,6 @@ public class ModMain
 
 	public ModMain()
 	{
-		
-		
 		triggerKey = new KeyPress(KEYBOARD_SHORTCUT, true);
 
 		options = new OptionManager("mcm_options.txt");

@@ -2,7 +2,7 @@ package qwertysam.messages.api;
 
 public enum MessageType
 {
-	BECOME_STAFF(URL.HOW_TO_BECOME_MOD), 
+	BECOME_STAFF(URL.HOW_TO_BECOME_PATROL), 
 	RULES(URL.RULES), 
 	VOTE(URL.VOTE), 
 	DONATE(URL.DONATE), 

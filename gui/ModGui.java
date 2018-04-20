@@ -355,7 +355,7 @@ public class ModGui extends GuiFloatingTextAPI
 	{
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
-		drawCenteredString(fontRendererObj, "Staff Tools", width / 2, spaceFromTop - 16, 16777215);
+		drawCenteredString(fontRenderer, "Staff Tools", width / 2, spaceFromTop - 16, 16777215);
 
 		drawFloatingText(mouseX, mouseY);
 	}

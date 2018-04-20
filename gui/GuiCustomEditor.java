@@ -154,7 +154,7 @@ public class GuiCustomEditor extends GuiFloatingTextAPI
 
 		if (titleEdit)
 		{
-			customTitle = new GuiTextField(0, fontRendererObj, width / 2 - 104, 50, 100, 20);
+			customTitle = new GuiTextField(0, fontRenderer, width / 2 - 104, 50, 100, 20);
 			customTitle.setText(saveManager.getOption(customTitleKey).value());
 			customTitle.setMaxStringLength(16);
 		}
@@ -164,15 +164,15 @@ public class GuiCustomEditor extends GuiFloatingTextAPI
 			buttonList.add(new GuiIconButton(27, "Auto-Send Link", width / 2 + 108, 50, (saveManager.getOption(autoLinkKey).asBoolean() ? 120 : 140), 0));
 		}
 
-		customLine1 = new GuiTextField(1, fontRendererObj, width / 2 - 200, 90, 400, 20);
+		customLine1 = new GuiTextField(1, fontRenderer, width / 2 - 200, 90, 400, 20);
 		customLine1.setMaxStringLength(100);
 		customLine1.setText(saveManager.getOption(customLine1Key).value());
 
-		customLine2 = new GuiTextField(2, fontRendererObj, width / 2 - 200, 130, 400, 20);
+		customLine2 = new GuiTextField(2, fontRenderer, width / 2 - 200, 130, 400, 20);
 		customLine2.setMaxStringLength(100);
 		customLine2.setText(saveManager.getOption(customLine2Key).value());
 
-		customLine3 = new GuiTextField(3, fontRendererObj, width / 2 - 200, 170, 400, 20);
+		customLine3 = new GuiTextField(3, fontRenderer, width / 2 - 200, 170, 400, 20);
 		customLine3.setMaxStringLength(100);
 		customLine3.setText(saveManager.getOption(customLine3Key).value());
 	}
@@ -282,23 +282,23 @@ public class GuiCustomEditor extends GuiFloatingTextAPI
 		drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
-		drawCenteredString(fontRendererObj, "Custom Preset Editor", width / 2, 18, 16777215);
+		drawCenteredString(fontRenderer, "Custom Preset Editor", width / 2, 18, 16777215);
 
 		if (titleEdit)
 		{
-			drawString(fontRendererObj, "Title", width / 2 - 84, 38, 16777215);
+			drawString(fontRenderer, "Title", width / 2 - 84, 38, 16777215);
 		}
 		else
 		{
 			// Renders the original title from the right
-			drawString(fontRendererObj, customTitleKey, width / 2 - fontRendererObj.getStringWidth(customTitleKey) - 18, 56, 16777215);
+			drawString(fontRenderer, customTitleKey, width / 2 - fontRenderer.getStringWidth(customTitleKey) - 18, 56, 16777215);
 		}
 
-		drawString(fontRendererObj, "Line 1", width / 2 - 180, 78, 16777215);
+		drawString(fontRenderer, "Line 1", width / 2 - 180, 78, 16777215);
 
-		drawString(fontRendererObj, "Line 2", width / 2 - 180, 118, 16777215);
+		drawString(fontRenderer, "Line 2", width / 2 - 180, 118, 16777215);
 
-		drawString(fontRendererObj, "Line 3", width / 2 - 180, 158, 16777215);
+		drawString(fontRenderer, "Line 3", width / 2 - 180, 158, 16777215);
 
 		if (titleEdit) customTitle.drawTextBox();
 		customLine1.drawTextBox();
