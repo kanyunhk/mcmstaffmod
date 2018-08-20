@@ -22,7 +22,8 @@ public enum Staff
 	JENNA("98090da156f94c93a64f939dd4fab92f", "Slacks"), // Jenna
 	LITTLE("1fc52aac1acc4655ba592bc52ac49d2d", "smallwoman"), // littlemancrush
 	KAN("bd4f27d249464d34b743a1765030a3e4", "Kannu"), // Kannn
-	INVEN("aee12c579ec54974bd1d1c77b359d1ab", "Venny"); // InVentrax
+	INVEN("aee12c579ec54974bd1d1c77b359d1ab", "Venny"), // InVentrax
+	ANGEL("e80a482139c34bc5bebf0ffd2ae90725", "Angel"); // infiniteangel24
 	
 	private String uuid;
 	private String nickname;
