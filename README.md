@@ -2,7 +2,7 @@
 A Minecraft mod designed for the Minecraft Murder staff team. 
 
 ### Example
-Upon pressing the tilda `~` key, you'll be greeted with this GUI. It i highly customizable, and immediately sends important messages and links in chat based on the context of each button.
+Upon pressing the tilda `~` key (or the `G` key if your keyboard doesn't have easey access to `~`), you'll be greeted with this GUI. It i highly customizable, and immediately sends important messages and links in chat based on the context of each button.
 ![Demo](https://i.imgur.com/0xubmty.png)
  
 
