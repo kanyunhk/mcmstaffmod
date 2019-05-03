@@ -1,4 +1,4 @@
-package qwertysam.io;
+package mcmstaffmod.io;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,9 +9,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import qwertysam.log.LogType;
-import qwertysam.log.QLogger;
-import qwertysam.util.PathUtil;
+import mcmstaffmod.log.LogType;
+import mcmstaffmod.log.QLogger;
+import mcmstaffmod.util.PathUtil;
 
 public class OptionManager
 {

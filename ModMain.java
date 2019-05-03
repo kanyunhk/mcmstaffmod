@@ -1,34 +1,38 @@
-package qwertysam;
+package mcmstaffmod;
 
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import qwertysam.gui.ModGui;
-import qwertysam.io.Option;
-import qwertysam.io.OptionManager;
-import qwertysam.messages.api.MessageSender;
-import qwertysam.util.AuthUtil;
-import qwertysam.util.KeyPress;
+import mcmstaffmod.gui.ModGui;
+import mcmstaffmod.io.Option;
+import mcmstaffmod.io.OptionManager;
+import mcmstaffmod.messages.api.MessageSender;
+import mcmstaffmod.util.AuthUtil;
+import mcmstaffmod.util.KeyPress;
 
 /**
  * Uses Timer.java from Minecraft src code.
- * 
- * @version 2.1
  */
 public class ModMain
 {
-	public static final int KEYBOARD_SHORTCUT = AuthUtil.getUser().isEtian() ? Keyboard.KEY_G : Keyboard.KEY_GRAVE;
+	// TODO Always change this to false before exporting
+	public static final boolean debug = false;
+	
+	private static ModMain inst = null;
+	public static ModMain instance() {
+		if (inst == null) inst = new ModMain();
+		return inst;
+	}
+	
+	public static int KEYBOARD_SHORTCUT = Keyboard.KEY_G;
 	private KeyPress triggerKey;
 	private OptionManager options;
 	private MessageSender messageSender;
 
-	// TODO Always change this to false before exporting
-	public static final boolean debug = false;
-
 	public ModMain()
 	{
-		
+		KEYBOARD_SHORTCUT = AuthUtil.getUser() != null && AuthUtil.getUser().isEtian() ? Keyboard.KEY_G : Keyboard.KEY_GRAVE;
 		
 		triggerKey = new KeyPress(KEYBOARD_SHORTCUT, true);
 
@@ -48,18 +52,15 @@ public class ModMain
 	 */
 	public void gameLoop()
 	{
-		if (Minecraft.getMinecraft().currentScreen instanceof ModGui || Minecraft.getMinecraft().currentScreen == null) // Stops the GUI from opening while not in-game
+		if (triggerKey.isPressed())
 		{
-			if (triggerKey.isPressed())
+			if (Minecraft.getMinecraft().currentScreen instanceof ModGui) // Exits if it's already on the menu
 			{
-				if (Minecraft.getMinecraft().currentScreen instanceof ModGui) // Exits if it's already on the menu
-				{
-					Minecraft.getMinecraft().displayGuiScreen((GuiScreen) null);
-				}
-				else // Goes to the menu if it's not there
-				{
-					Minecraft.getMinecraft().displayGuiScreen(new ModGui(this));
-				}
+				Minecraft.getMinecraft().displayGuiScreen((GuiScreen) null);
+			}
+			else if (Minecraft.getMinecraft().currentScreen == null) // Stops the GUI from opening while not in-game
+			{
+				Minecraft.getMinecraft().displayGuiScreen(new ModGui(this));
 			}
 		}
 	}

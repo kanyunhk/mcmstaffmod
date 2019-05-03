@@ -1,16 +1,16 @@
-package qwertysam.gui;
+package mcmstaffmod.gui;
 
 import java.io.IOException;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNo;
-import qwertysam.ModMain;
-import qwertysam.io.Option;
-import qwertysam.messages.api.MessageSender;
-import qwertysam.messages.api.MessageType;
-import qwertysam.messages.api.URL;
-import qwertysam.util.UrlOpener;
+import mcmstaffmod.ModMain;
+import mcmstaffmod.io.Option;
+import mcmstaffmod.messages.api.MessageSender;
+import mcmstaffmod.messages.api.MessageType;
+import mcmstaffmod.messages.api.URL;
+import mcmstaffmod.util.UrlOpener;
 
 public class ModGui extends GuiFloatingTextAPI
 {
@@ -355,7 +355,7 @@ public class ModGui extends GuiFloatingTextAPI
 	{
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
-		drawCenteredString(fontRendererObj, "Staff Tools", width / 2, spaceFromTop - 16, 16777215);
+		drawCenteredString(fontRenderer, "Staff Tools", width / 2, spaceFromTop - 16, 16777215);
 
 		drawFloatingText(mouseX, mouseY);
 	}

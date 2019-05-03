@@ -1,4 +1,4 @@
-package qwertysam.gui;
+package mcmstaffmod.gui;
 
 import java.util.ArrayList;
 import java.util.List;

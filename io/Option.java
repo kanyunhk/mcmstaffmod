@@ -1,10 +1,10 @@
-package qwertysam.io;
+package mcmstaffmod.io;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import qwertysam.messages.api.MessageType;
-import qwertysam.messages.api.URL;
+import mcmstaffmod.messages.api.MessageType;
+import mcmstaffmod.messages.api.URL;
 
 public enum Option
 {

@@ -1,4 +1,4 @@
-package qwertysam.messages.api;
+package mcmstaffmod.messages.api;
 
 public enum MessageType
 {

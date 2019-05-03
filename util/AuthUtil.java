@@ -1,8 +1,9 @@
-package qwertysam.util;
+package mcmstaffmod.util;
 
 import net.minecraft.client.Minecraft;
-import qwertysam.log.LogType;
-import qwertysam.log.QLogger;
+import mcmstaffmod.ModMain;
+import mcmstaffmod.log.LogType;
+import mcmstaffmod.log.QLogger;
 
 public class AuthUtil
 {
@@ -12,6 +13,13 @@ public class AuthUtil
 
 	private static void init()
 	{
+		hasInit = true;
+		if (ModMain.debug) {
+			canUse = true;
+			QLogger.log(LogType.AUTHUTIL, "Debug mode; allowing usage.");
+			return;
+		}
+		
 		String uuid = Minecraft.getMinecraft().getSession().getPlayerID();
 
 		QLogger.log(LogType.AUTHUTIL, "UUID = " + uuid);
@@ -20,7 +28,6 @@ public class AuthUtil
 		canUse = Staff.isValid(user);
 		
 		QLogger.log(LogType.AUTHUTIL, canUse ? "Authentication successful!... oHonh, " + user.getName() + "... c;|" : "Authentication failed.");
-		hasInit = true;
 	}
 	
 	public static boolean canUse()
