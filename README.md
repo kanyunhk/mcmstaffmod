@@ -17,7 +17,7 @@ Note: there is some basic protection which only allows official staff members to
 
 Now you should be able to run the game with the mod! Be sure when exporting to...
 
-6. Change the value of `mcmstaffmod.ModMain.debug` to `true`
+6. Change the value of `mcmstaffmod.ModMain.debug` to `false`
 7. Recompile and reobfuscate Minecraft using the MCP tools (e.g. `./recompile.sh` then `./reobfuscate.sh`)
 8. Be sure to package the `assets` folder with the mod `.class` files
 
