@@ -1,4 +1,4 @@
-package qwertysam.util;
+package mcmstaffmod.util;
 
 import java.awt.Desktop;
 import java.io.IOException;

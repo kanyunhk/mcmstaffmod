@@ -1,4 +1,4 @@
-package qwertysam.log;
+package mcmstaffmod.log;
 
 import org.apache.logging.log4j.Level;
 

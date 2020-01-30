@@ -1,4 +1,4 @@
-package qwertysam.util;
+package mcmstaffmod.util;
 
 import org.lwjgl.input.Keyboard;
 

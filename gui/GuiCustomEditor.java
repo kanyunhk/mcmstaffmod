@@ -1,4 +1,4 @@
-package qwertysam.gui;
+package mcmstaffmod.gui;
 
 import java.io.IOException;
 
@@ -8,9 +8,9 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
-import qwertysam.ModMain;
-import qwertysam.io.OptionManager;
-import qwertysam.util.KeyPress;
+import mcmstaffmod.ModMain;
+import mcmstaffmod.io.OptionManager;
+import mcmstaffmod.util.KeyPress;
 
 /**
  * The options menu for the backup mod.

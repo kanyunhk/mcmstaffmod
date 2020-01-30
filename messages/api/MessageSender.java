@@ -1,11 +1,11 @@
-package qwertysam.messages.api;
+package mcmstaffmod.messages.api;
 
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import qwertysam.io.Option;
-import qwertysam.log.LogType;
-import qwertysam.log.QLogger;
+import mcmstaffmod.io.Option;
+import mcmstaffmod.log.LogType;
+import mcmstaffmod.log.QLogger;
 
 public class MessageSender
 {
